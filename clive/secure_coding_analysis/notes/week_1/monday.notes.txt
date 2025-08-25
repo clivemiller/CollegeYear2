@@ -1,0 +1,45 @@
+8|25|2025
+
+CYB2200 - Secure Coding And Analysis
+
+Lecture 1: Jia Song (No Bolden?)
+    - Jia song has PHD in Comp Sci
+        - Jsong@uidaho.edu - Perferred
+        - JEB 340 
+        - In email use "[CYB2200] YOUR SUBJECT HERE" for email
+        - MWF 9:30 - 10:20 , labs on Friday
+    - WHY :: :: ::
+        - So we can write robust code
+        - this class is required
+        - find vulnerabilities before criminals
+    - WHAT:
+        - SPP : Secure Programming Practices
+            - Priciples of Secure Programming
+            - Robust Programming
+            - Defensive Programming
+            - Programming Flaws
+            - Static Analysis
+            - Different Programming languages
+        - SSA : Software Security Analysis
+            - Testing Methodologies 
+            - Static and Dynamic Analysis Techniques
+            - Sandboxing
+            - Common Analysis tools and methods
+        - QAT : QA/Functional Testing
+            - Testing Methodologies
+            - Test Coverage Analysis
+            - Automatic and manual generation of test inputs
+            - Test execution
+        - (bonus: STRIDE)
+            - S: Spoofing identity
+            - T: Tampering with data
+            - R: Repudiation
+            - I: Information disclosure
+            - D: Denial of service
+            - E: Elevation of privilege
+    - DELIVERABLES
+        - Produce Software Security Analysis tools and Techniques
+        - Apply knowledge to perform Software Security Analysis, using common tools 
+        - etc.
+        
+        

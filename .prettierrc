@@ -1,0 +1,42 @@
+{
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": true,
+  "printWidth": 100,
+  "overrides": [
+    {
+      "files": "*.c",
+      "options": { "tabWidth": 4, "semi": true }
+    },
+    {
+      "files": "*.cpp",
+      "options": { "tabWidth": 4, "semi": true }
+    },
+    {
+      "files": "*.py",
+      "options": { "tabWidth": 4, "singleQuote": false, "semi": false }
+    },
+    {
+      "files": "*.rs",
+      "options": { "tabWidth": 4, "semi": true }
+    },
+    {
+      "files": "*.tsx",
+      "options": { "tabWidth": 2, "semi": true }
+    },
+    {
+      "files": "*.ts",
+      "options": { "tabWidth": 2, "semi": true }
+    },
+    {
+      "files": "*.js",
+      "options": { "tabWidth": 2, "semi": true }
+    }
+    ,
+    {
+      "files": "*.txt",
+      "options": { "tabWidth": 2, "singleQuote": false, "semi": false }
+    }
+  ]
+}
