@@ -19,5 +19,8 @@ This repository contains coursework, projects, notes, and resources for the seco
 
 ## Getting Started
 
-Clone the repository to your local machine.
-Install prettier and relavent extensions (learn the basics of Markdown for notes)
+1. Clone the repository to your local machine: `git clone https://github.com/clivemiller/CollegeYear2.git`
+2. Install prettier and relavent extensions (learn the basics of Markdown for notes)
+3. Create a folder with your name at the root: `\CollegeYear2>mkdir <name>`
+4. Add your own files to your folder! 
+5. To save: `\CollegeYear2\<name>>git add .`, `\CollegeYear2\<name>>git commit -m "some message"`, `\CollegeYear2\<name>>git push`
