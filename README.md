@@ -4,6 +4,29 @@ Welcome to the repository for **College Year 2**!
 
 This repository contains coursework, projects, notes, and resources for the second year of college studies. It is organized to help you keep track of assignments, collaborate with classmates, and review important materials.
 
+## Members
+- **Clive Miller** 
+    - Expertice:
+        - Systems:
+            - Github
+            - Bitbucket
+            - React
+            - Vs Code 
+            - Windows
+            - Keycloak
+            - Kubernetes
+            - Helm
+        - Fields: 
+            - Full Stack Web Development
+        - Languages (ranked in familarity):
+            - Typescript/Javascript/HTML/CSS
+            - Go
+            - Python
+            - C++
+            - Java
+            - Bash
+            - C
+            - Assembly
 ## Contents
 
 - **Assignments:** Source code, reports, and documentation for class assignments.
