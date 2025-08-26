@@ -14,12 +14,20 @@ The following repository will contain:
 
 The basic file structure:
 - gabriel
-  - week_1
-    - class_1
-    - class_2
-    - class_3
-  - week_2
-  - week_3
+  - subject_1
+    - syllabus.pdf
+    - week_1
+      - monday
+        - notes.txt
+        - newMaterialTesting.cpp
+        - assignment_1.cpp
+        - finalProject.cpp
+      - wednesday
+      - friday
+    - week_2
+    - week_3
+  - subject_2
+  - subject_3
 
 All pushes I make to this directory will be made using the branch *gabriel*
 Please don't edit without asking first :D
