@@ -1,4 +1,4 @@
-# Stats - easy A with renae
+# Stats - renae
 
 ## Chapter One
 
