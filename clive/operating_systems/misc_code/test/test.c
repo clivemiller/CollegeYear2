@@ -6,7 +6,7 @@ int test(int number) {
 
 int testForLoop(int loopNum, int numToAdd) {
     int start = 0;
-    for (int beg = 0; beg == loopNum; beg++) {
+    for (int beg = 0; beg < loopNum; beg++) {
         start += numToAdd;
         printf("run: %d\n", start);
     }
