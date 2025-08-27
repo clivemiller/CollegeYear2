@@ -6,6 +6,7 @@
 
 - **Statistics**: the science of collecting, analyzing, interpreting, and presenting data. Organizing and summarzing data is called **descriptive statistics**. Using formal methods ()
 - **Probability**: the mathematical tool used to study randomness and the likelihood of events.
+- **Parameter**: a number that is a property of the population
 
 In statistics, the entire group under study is the **population**, and a subset of this group is a **sample**. The method of choosing a subset is called **sampling**, and the observed values are **data**.
 
