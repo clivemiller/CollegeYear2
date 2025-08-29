@@ -1,206 +1,210 @@
-# CS 2240 - Operating System
+# CS 2240 - Operating Systems
 
-**Date:** 8/25/2025
+**Date:** 8/25/2025  
 
-## Lecture 1: Bruce Bolden - Intro to operating systems
-- Contact: JEB 232 [bruceb@uidaho.edu](mailto:bruceb@uidaho.edu)
+---
+
+## Lecture 1: Bruce Bolden – Intro to Operating Systems
+**Contact:** JEB 232 · [bruceb@uidaho.edu](mailto:bruceb@uidaho.edu)
 
 ### Operating System
-- Uses the hardware resources of one or more processors
-- Provides a set of services to system users
-- Manages secondary memory and I/O devices 
+- Uses the hardware resources of one or more processors  
+- Provides a set of services to system users  
+- Manages secondary memory and I/O devices  
 
 ### Basic Elements
-- Processor
-- Main Memory
-    - volatile
-    - referred to as real memory or primary memory
-- I/O modules
-    - secondary memory devices
-    - communications equipment
-    - terminals
-- System bus
-    - communication among processors, memory, I/O modules
-### Processor 
-- Two internal registors
-    - Memory Address registor (MAR)
-        - Specifies the address for the next read or write 
-    - Memory buffer register (MBR)
-        - Contains data written into memory or receives
-        - data read from memory
-    - I/O address register
-    - I/O buffer register
+- **Processor**
+- **Main Memory**
+  - Volatile
+  - Referred to as real memory or primary memory
+- **I/O Modules**
+  - Secondary memory devices
+  - Communications equipment
+  - Terminals
+- **System Bus**
+  - Communication among processors, memory, I/O modules  
+
+### Processor
+- **Internal Registers**
+  - Memory Address Register (MAR)  
+    - Specifies the address for the next read or write  
+  - Memory Buffer Register (MBR)  
+    - Contains data written into memory or receives data read from memory  
+  - I/O Address Register  
+  - I/O Buffer Register  
 
 ### Processor Registers
-- User-visible registers
-    - Enable programmer to minimize main-references by optimizing register use
-- Control and status registers
-    - Used by processor to control operation of the processor
-    - Used by privileged operating-system routines to control program execution
+- **User-Visible Registers**
+  - Enable programmer to minimize main-memory references by optimizing register use
+- **Control and Status Registers**
+  - Used by processor to control operation
+  - Used by privileged OS routines to control program execution  
 
 ### User-Visible Registers
-- May be referenced by machine language
-- Available to all programs – both application programs and system programs
-- Types of registers
-    - Data
-    - Address
-        - Index
-        - Segment pointer
-        - Stack pointer
-- Address Registers
-    - Index
-        - Involves adding an index to a base value to get an address
-    - Segment pointer
-        - When memory is divided into segments, memory is referenced by a segment and an offset
-    - Stack pointer
-        - Points to top of stack
-- Control and Status Registers
-    - Program Counter (PC)
-        - Contains the address of an instruction to be fetched
-    - Instruction Register (IR)
-        - Contains the instruction most recently fetched
-    - Program Status Word (PSW)
-        - Condition codes
-        - Interrupt enable/disable
-        - Supervisor/user mode
-    - Condition Codes or Flags
-        - Bits set by the processor hardware as a result of operations
-        - Examples
-            - Positive result
-            - Negative result
-            - Zero
-            - Overflow
+- May be referenced by machine language  
+- Available to all programs (application + system)  
+
+**Types of Registers:**
+- Data  
+- Address  
+  - Index  
+  - Segment pointer  
+  - Stack pointer  
+
+**Address Registers:**
+- **Index** – Adds an index to a base value to get an address  
+- **Segment Pointer** – Memory divided into segments; referenced by segment + offset  
+- **Stack Pointer** – Points to top of stack  
+
+**Control and Status Registers:**
+- Program Counter (PC) – Address of instruction to be fetched  
+- Instruction Register (IR) – Instruction most recently fetched  
+- Program Status Word (PSW)  
+  - Condition codes  
+  - Interrupt enable/disable  
+  - Supervisor/user mode  
+- Condition Codes or Flags  
+  - Bits set by hardware after operations  
+  - Examples: Positive, Negative, Zero, Overflow  
 
 ### Instruction Execution
-- Two steps
-    - Processor reads instructions from memory aka Fetching
-    - Processor executes each instruction
+- Two steps:  
+  1. Fetch instruction from memory  
+  2. Execute instruction  
 
 ### Instruction Fetch and Execute
-- The processor fetches the instruction from memory
-- Program counter (PC) holds address of the instruction to be fetched next
-- Program counter is incremented after each fetch
+- Processor fetches from memory  
+- PC holds address of next instruction  
+- PC increments after each fetch  
 
 ### Instruction Register
-- Fetched instruction is placed in the instruction register
-    - Categories
-        - Processor-memory
-            - Transfer data between processor and memory
-        - Processor-I/O
-            - Data transferred to or from a peripheral device
-        - Data processing
-            - Arithmetic or logic operation on data
-        - Control
-            - Alter sequence of execution
-## Lecture 2: Overview 
-- START -> Fetch Instruction -> Execute Instruction (until HALT) -> Execute Stage -> Fetch Stage (back to fetch instruction)
-- Instruction Fetch and Execute
-    - The processor fetches the instruction from memory
-    - Program counter (PC) holds address of the instruction to be fetched next
-    - Program counter is incremented after each fetch
-- Instruction Register
-- Fetched instruction is placed in the instruction register
-- Categories
-    - Processor-memory
-        - Transfer data between processor and memory
-    - Processor-I/O
-        - Data transferred to or from a peripheral device
-    - Data processing
-        - Arithmetic or logic operation on data
-    - Control
-        - Alter sequence of execution
-- Interrupts
-    - Interrupt the normal sequencing of the processor
-    - Most I/O devices are slower than the processor
-        - Processor must pause to wait for device
+- Holds fetched instruction  
 
-Classes of Interrupts:
----
-**Program**
-Generated by some condition that occurs as a result of an instruction execution, such as arithmetic overflow, division by zero, attempt to execute an illegal machine instruction, and reference outside a user's allowed memory space.
-
-**Timer**
-Generated by a timer within the processor. This allows the operating system to perform certain functions on a regular basis.
-
-**I/O**
-Generated by an I/O controller, to signal normal completion of an operation or to signal a variety of error conditions.
-
-**Hardware failure**
-Generated by a failure, such as power failure or memory parity error.
+**Categories:**
+- Processor-memory – Transfer data between CPU and memory  
+- Processor-I/O – Transfer data to/from peripheral  
+- Data Processing – Arithmetic/logic on data  
+- Control – Alters execution sequence  
 
 ---
 
-- Interrupt Handler
-    - Program to service a particular I/O device
-    - Generally part of the operating system
-- Interrupts
-    - Suspends the normal sequence of execution
-    ![interrupt](imgs/image-1.png)
-- Interrupt Cycle
-    - Processor checks for interrupts
-    - If no interrupts, fetch the next instruction for the current program
-    - If an interrupt is pending, suspend execution of the current program, and execute the interrupt-handler routine
-    ![interrupt cycle](imgs/image.png)
-- Simple Interrupt Processing
-    - ![simple_interrupt](imgs/simplintprocess.png)
-- Changes in Memory and Registers for an Interrupt
-    - ![chgmemreg](imgs/chgmemreg.png)
-- Multiple Interrupts
-    - Disable interrupts while an interrupt is being processed
-    ![seqintproc](imgs/seqintproc.png)
-    - Define priorities for interrupts
-    ![alt text](imgs/multint1.png)
-    ![alt text](imgs/multint2.png)
-- Think of testing or verifying the
-correctness of a program.
-What issues or potential problems can you
-think of w.r.t. user defined interrupts?
-- Multiprogramming
-    - Processor has more than one program to
-    execute
-    - The sequence the programs are executed
-    depend on their relative priority and
-    whether they are waiting for I/O
-    - After an interrupt handler completes,
-    control may not return to the program
-    that was executing at the time of the
-    interrupt
-- Memory Hierarchy
-    - Faster access time, greater cost per bit
-    - Greater capacity, lower cost per bit
-    - Greater capacity, slower access speed
-    ![alt text](imgs/mempyrm.png)
-- Going Down the Hierarchy
-    - Decreasing cost per bit
-    - Increasing capacity
-    - Increasing access time
-    - Decreasing frequency of access of the memory by the processor
-        - Locality of reference
-- Secondary Memory
-    - Nonvolatile
-    - Auxiliary memory
-    - Used to store program and data files
-- Disk Cache
-    - A portion of main memory used as a buffer to temporarily to o old data for the disk
-    - Disk writes are clustered
-    - Some data written out may be referenced
-    again. The data are retrieved rapidly
-    from the software cache instead of
-    slowly from disk
-- Cache Memory
-    - Invisible to operating system
-    - Increase the speed of memory
-    - Processor speed is faster than memory
-    speed
-    - Exploit the principle of locality
-    ![alt text](imgs/cachemem.png)
-    - Contains a copy of a portion of main memory
-    - Processor first checks cache
-    - If not found in cache, the block of memory
-    containing the needed information is
-    moved to the cache and delivered to the
-    processor
+## Lecture 2: Overview
 
+### Instruction Cycle
+- START → Fetch Instruction → Execute Instruction → (until HALT)  
+- Execution alternates between **Fetch Stage** and **Execute Stage**
 
+### Instruction Fetch & Execute
+- Processor fetches from memory  
+- PC holds next instruction address  
+- PC increments after each fetch  
+- Instruction placed in Instruction Register  
 
+**Categories:**
+- Processor-memory  
+- Processor-I/O  
+- Data processing  
+- Control  
 
+### Interrupts
+- Interrupts normal sequencing  
+- Needed because I/O devices are slower than processor  
+- Processor must pause to wait  
+
+#### Classes of Interrupts
+- **Program** – Errors (overflow, divide by zero, illegal instruction, memory violation)  
+- **Timer** – Generated by processor timer for periodic OS tasks  
+- **I/O** – Generated by I/O controller (completion or error)  
+- **Hardware Failure** – e.g., power failure, memory parity error  
+
+### Interrupt Handling
+- **Interrupt Handler** – OS routine to service device  
+- **Interrupts** – Suspend execution, transfer control  
+- **Interrupt Cycle**  
+  - Check for interrupts  
+  - If none → fetch next instruction  
+  - If pending → suspend program, run handler  
+
+**Diagrams:**  
+- ![interrupt](imgs/image-1.png)  
+- ![interrupt cycle](imgs/image.png)  
+- ![simple_interrupt](imgs/simplintprocess.png)  
+- ![chgmemreg](imgs/chgmemreg.png)  
+- ![seqintproc](imgs/seqintproc.png)  
+- ![multint1](imgs/multint1.png)  
+- ![multint2](imgs/multint2.png)  
+
+**Discussion:**  
+What issues might arise when testing or verifying correctness of user-defined interrupts?  
+
+---
+
+### Multiprogramming
+- Processor executes multiple programs  
+- Execution order depends on priority and I/O waiting  
+- After interrupt handling, may not resume same program  
+
+---
+
+### Memory Hierarchy
+- **Trade-offs:** Faster = more expensive, Slower = cheaper  
+- ![mempyrm](imgs/mempyrm.png)
+
+**Hierarchy Trends:**
+- Down the hierarchy:  
+  - ↓ Cost per bit  
+  - ↑ Capacity  
+  - ↑ Access time  
+  - ↓ Frequency of processor access  
+
+**Details:**
+- **Secondary Memory** – Nonvolatile, auxiliary, stores programs/data  
+- **Disk Cache**  
+  - Main memory buffer for disk  
+  - Clustered writes  
+  - Faster re-access from cache vs disk  
+- **Cache Memory**  
+  - Hidden from user/OS  
+  - Matches faster CPU speed  
+  - Exploits locality  
+  - ![cachemem](imgs/cachemem.png)  
+  - Processor checks cache first, otherwise fetches from main memory  
+  - ![cacheRead](imgs/cacheRead.png)  
+
+**Cache Design:**
+- Cache size – small caches still impactful  
+- Block size – affects hit rate and eviction probability  
+- Mapping function – decides block location in cache  
+- Replacement algorithm – e.g., Least Recently Used (LRU)  
+- Write policy – when memory write occurs (on update vs on replacement)  
+
+---
+
+### Programmed I/O
+- I/O module executes action, not CPU  
+- Status register updated  
+- No interrupts – CPU must poll status until complete  
+- Known as **polling**  
+- ![ioprocess](imgs/ioprocess.png)  
+
+---
+
+### Interrupt-Driven I/O
+- Processor interrupted when I/O module ready to exchange data  
+- Processor saves context of executing program and begins interrupt-handler  
+- Eliminates needless waiting  
+- Still consumes processor time because **every word read/written passes through processor**  
+- ![alt text](imgs/intrdrivio.png)
+
+---
+
+### Direct Memory Access (DMA)
+- I/O exchanges occur directly with memory  
+- Processor grants I/O module authority to read/write memory directly  
+- Relieves processor of data transfer responsibility  
+
+**DMA Transfers:**
+- Transfers a block of data directly between memory and device  
+- Interrupt sent when transfer completes  
+- Processor continues other work during transfer  
+- ![alt text](imgs/dnatrans.png)
