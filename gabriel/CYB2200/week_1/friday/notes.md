@@ -52,6 +52,15 @@ __**Frid Aug 29 Class Notes**__
 # C-style Strings
 - Strings are a fundamental concept, but they are not a built-in data type in C.
 - **C-stlye string:**
-  - character array terminated by a NULL character (ASCII 0x00)
+  - character array terminated by a NUL character (ASCII 0x00)
 
-# 
+# C String Handling Vulnerabilities
+- Unsafe use of a handful of functions:
+  - Unbounded string functions
+    - The destination buffer's size isn't taken into account at all.
+    - buffer overflow (source data's length exceeds the destination buffer's size)
+  - Bounded string functions
+    - Safer alternatives to the unbounded string functions
+    - A length parameter to designate the length (or bounds) of the destination buffer
+    - May be misused in more subtle ways
+  - 
