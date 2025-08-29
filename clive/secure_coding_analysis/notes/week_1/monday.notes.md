@@ -205,7 +205,7 @@ risk, attack.
 - Strings are not a built in data type in C
 - IN C, they are char arrays terminated by a Nul char (0x00)
 
-```C
+```c
   int main()
   {
     int scores[10];
@@ -219,17 +219,17 @@ risk, attack.
 
 ``` 
 ### Examples
-```C
+```c
   char name[100] = "username";
   cout << "size of name is: " << sizeof(name) << endl;
   output = 100;
 ```
-```C
+```c
   char str[] = "hello";
   cout << "size of str is: " << sizeof(str) <<endl;
   output = 6;
 ```
-```C
+```c
   char str2[5] = "hello";
   cout << "size of str is: " << sizeof(str2) <<endl;
   compiler warning
@@ -259,12 +259,64 @@ risk, attack.
 ### Printf() in C
 - %d = decimal
 - %x = address
-```C
+```c
   printf("hello world!\n");
   printf("a has value: %d\n", a);
   printf("a has value: %d\n, b has value: %d\n", a, b);
   printf("a has value: %d\n, b has value: %d\n, c is at address: %x\n", a, b, &c);
 ```
 
- 
+- int printf(const char *format, ...)
+  - The ... indicates that zero or more optional args can be provided
 
+| Parameter | Meaning                                     | Passed as  |
+|-----------|---------------------------------------------|------------|
+| %d        | decimal (int)                               | value      |
+| %u        | unsigned decimal (unsigned int)             | value      |
+| %x        | hexadecimal (unsigned int)                  | value      |
+| %s        | string ((const) (unsigned) char *)          | reference  |
+| %n        | number of bytes written so far, (* int)     | reference  |
+
+### Unbounded string functions
+### **scanf()** - reading input
+
+- **Function** — `int scanf(const char *format, ...)`
+- **Purpose** — The `scanf()` function parses input according to the format argument.
+
+---
+
+#### Example
+
+```c
+#include <stdio.h>
+
+int main() {
+    char name[20];
+    scanf("%s", name);
+    printf("Your name is: %s", name);
+    return 0;
+}
+// This program demonstrates the use of scanf() to read a string input.
+// It is important to ensure that the input does not exceed the buffer size.
+// scanf() can be used with a maximum field width to prevent buffer overflow.
+```
+### **sprintf()** - reading input
+
+- **Function** — `int sprintf(char *str, const char *format, ...)`
+- **Purpose** — The `sprintf()` functions print a formatted string into a destination buffer.
+
+
+```c
+#include <stdio.h>
+
+int main() {
+    char buffer[20];
+    int a = 5, b = 3, k;
+
+    k = sprintf(buffer, "%d plus %d is %d", a, b, a+b);
+    printf("[%s] is a string, its length is %d. \n", buffer, k);
+
+    return 0;
+}
+// "5 plus 3 is 8", is a string, its length is 13
+```
