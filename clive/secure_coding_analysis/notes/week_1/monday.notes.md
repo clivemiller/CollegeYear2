@@ -140,3 +140,131 @@ Something that uses more that one of these is a **MFA** or multi-factor authenti
   - **Software Bugs** are errors, flaws, mistakes, or oversights in programs
   - **Software Vulnerabilities** are specific flaws that allow attack vectors
   - **Malware** is software that has mal-intent
+
+## Lecture 2: Continuing Basic concepts
+
+### Robust Programming
+- A style of programming that prevents abnormal termination or unexpected actions
+- Handles Bad inputs gracefully
+- Detects internal errors and handles them gracefully
+### The Philosophy of secure Programming
+1. Remember what you have learned in the programming classes.
+  - Check user input
+  - Check your bounds
+  - Assume an error will occur and handle it properly
+    - What could someone deliberately do to compromise your program?
+      - Adversary thinking
+    - What could someone unintentionally do to compromise your program?
+      - People make mistakes
+2. Defensive Programming
+  - Input validation, type checking
+  - Cover all cases - use defaults to handle cases not explicitly covered
+  - Catch and handle exceptions at the lowest level possible
+3. Understand the environment in which your program will be used.
+  - Programs interact with people and with the system.
+4. Understand the procedures under which people will use your program.
+  - The best program if installed incorrectly can compromise the system.
+  - The best program if configured incorrectly can also cause problems.
+
+### HOW DO WE MANAGE SOFTWARE VULNERABILITIES?
+  - Design and implement systems to avoid them.
+  - Analyze and test systems to find them.
+  - Add mitigation techniques to address them.
+### SUMMARY
+- Computer security is the protection of the items you value, called the
+assets of an information system.
+- Confidentiality, integrity, and availability (CIA triad) are the three
+basic security objectives.
+- Computer security seeks to prevent unauthorized viewing
+(confidentiality) or modification (integrity) of data while preserving
+access (availability).
+Definitions: vulnerability, threat, control/countermeasure, harm,
+risk, attack.
+
+- Identification and authentication
+- Authorization, Access control
+- Software bugs/vulnerabilities, SDLC
+- Robust programming, Defensive programming
+
+## Lecture 3: C-style strings
+
+### Warm-up 
+  - In C++
+    - Do you use arrays? -yes
+    - Do you use strings? -yes
+  - IN C
+    - The only way is char array
+### Why C?
+  - Developed in 1970 when security was not a concern
+  - Many common vulnerabilities 
+    - Some of the weak points do not exist in other languages, so we use C to get exposed to these
+  - Many legacy code running C
+  - Many existing software/systems were written in C/C++, which is still widely used
+
+### C-strings
+- Strings are not a built in data type in C
+- IN C, they are char arrays terminated by a Nul char (0x00)
+
+```C
+  int main()
+  {
+    int scores[10];
+    char name[100];
+    int number_of_score = 0;
+    double average = 0;
+    int sum = 0;
+    char grade = 'X';
+    char comments[5] = "NONE";
+  }
+
+``` 
+### Examples
+```C
+  char name[100] = "username";
+  cout << "size of name is: " << sizeof(name) << endl;
+  output = 100;
+```
+```C
+  char str[] = "hello";
+  cout << "size of str is: " << sizeof(str) <<endl;
+  output = 6;
+```
+```C
+  char str2[5] = "hello";
+  cout << "size of str is: " << sizeof(str2) <<endl;
+  compiler warning
+```
+- When a char array is created, the null terminator is automatically added
+### Two major problems with C strings
+1. The length of the string and the size of the array
+  - if the string is bigger than the array we have a buffer overflow
+2. The NUL terminator
+  - NUL char is marking the end of a string
+  - IF it is missing, functions can continue reading chars
+### NULL != NUL
+- NUL - null char, null terminator 
+  - it is a char
+  - indicates the end of a string char array
+- NULL - a macro 
+  - indicates a pointer doesn't have address
+### C Handling vulnerabilities
+- Unsafe use of handful of functions
+  - Unbounded string Functions (example: copy function)
+    - The destination buffer's size isn't taken into account at all
+    - buffer overflow (source data's length exceeds the destinations buffer size)
+  - Bounded String functions
+    - Safer option to unbounded
+    - they handle lengths
+
+### Printf() in C
+- %d = decimal
+- %x = address
+```C
+  printf("hello world!\n");
+  printf("a has value: %d\n", a);
+  printf("a has value: %d\n, b has value: %d\n", a, b);
+  printf("a has value: %d\n, b has value: %d\n, c is at address: %x\n", a, b, &c);
+```
+
+ 
+
