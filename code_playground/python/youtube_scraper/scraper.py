@@ -72,6 +72,8 @@ def build_ydl(playlistend: Optional[int] = None) -> YoutubeDL:
         "quiet": True,
         "no_warnings": True,
         "skip_download": True,
+        # Avoid picking up user's global yt-dlp config (which may set a bad format)
+        "ignoreconfig": True,
         # Limit playlist/channel lengths to keep things snappy
         "extract_flat": False,
     }
@@ -311,6 +313,7 @@ def download_videos(items: List[Dict[str, Any]], outdir: str, fmt: Optional[str]
         "restrictfilenames": True,
         "format": ydl_format,
         "noplaylist": True,
+        "ignoreconfig": True,
         # Keep download progress bar from yt-dlp
     }
     try:
@@ -327,7 +330,7 @@ def download_videos(items: List[Dict[str, Any]], outdir: str, fmt: Optional[str]
 
 
 def list_formats(url: str):
-    with YoutubeDL({"quiet": False, "no_warnings": False}) as ydl:
+    with YoutubeDL({"quiet": False, "no_warnings": False, "ignoreconfig": True}) as ydl:
         info = ydl.extract_info(url, download=False)
         ydl.list_formats(info)
 

@@ -64,6 +64,7 @@ Notes & disclaimers
 - `yt-dlp` performs the metadata extraction. Site changes may occasionally break scraping.
 - Network access is required at runtime to fetch data. This repo only provides the code.
 - For audio conversion (e.g., to mp3) or certain merges, `ffmpeg` may be required on your system PATH. By default, downloads use sensible formats without transcoding.
+- This tool ignores any global `yt-dlp` config files to avoid conflicts with custom formats. Use the `--format` flag per command if you need a specific format.
 
 Troubleshooting
 
