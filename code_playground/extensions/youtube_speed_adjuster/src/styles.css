@@ -1,0 +1,82 @@
+.yspeed-container {
+  position: fixed;
+  z-index: 2147483647; /* above YT UI */
+  top: 16px;
+  right: 16px; /* move to top-right to avoid logo */
+  left: auto;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: #fff;
+  pointer-events: none; /* let clicks pass through except on UI */
+}
+
+.yspeed-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(2px);
+  transition: background 0.2s ease, transform 0.1s ease;
+  pointer-events: auto;
+}
+
+.yspeed-toggle:hover { background: rgba(0,0,0,0.75); }
+.yspeed-toggle:active { transform: translateY(1px); }
+
+.yspeed-badge { font-weight: 600; font-size: 12px; letter-spacing: 0.2px; }
+
+.yspeed-panel {
+  display: none;
+  margin-top: 8px;
+  background: rgba(0,0,0,0.6);
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+  backdrop-filter: blur(2px);
+  pointer-events: auto;
+}
+
+.yspeed-container.open .yspeed-panel { display: block; }
+
+.yspeed-controls {
+  display: grid;
+  grid-template-columns: auto 160px auto 64px auto;
+  grid-column-gap: 6px;
+  align-items: center;
+}
+
+.yspeed-range { width: 100%; height: 4px; }
+
+.yspeed-number {
+  width: 64px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+}
+
+.yspeed-step, .yspeed-reset {
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.yspeed-step:hover, .yspeed-reset:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Make sure it looks okay in theater/fullscreen too */
+@media (max-width: 720px) {
+  .yspeed-controls { grid-template-columns: auto 120px auto 56px auto; }
+}
+
+/* Avoid blocking clicks when closed */
+.yspeed-container:not(.open) .yspeed-panel { pointer-events: none; }
