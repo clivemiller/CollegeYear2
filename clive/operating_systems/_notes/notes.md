@@ -208,3 +208,54 @@ What issues might arise when testing or verifying correctness of user-defined in
 - Interrupt sent when transfer completes  
 - Processor continues other work during transfer  
 - ![alt text](imgs/dnatrans.png)
+
+## Lecture 2 cout.
+### Operating System Objectives
+- Convenience
+  - Makes the computer more convenient to use
+- Efficiency
+  - Allows computer system resources to be used
+in an efficient manner
+- Ability to evolve
+  - Permit effective development, testing, and
+introduction of new system functions
+without interfering with service
+
+### Layers of Computer systems
+
+- ![alt text](imgs/compsyslayer.png)
+
+### Services Provided by the **Operating System**
+- Program development
+- Editors and debuggers
+- Program execution
+- Access to I/O devices
+- Controlled access to files
+- Memory management
+- System access
+- Network support
+- Error detection and response
+  - Internal and external hardware errors
+    - Memory error
+    - Device failure
+  - Software errors
+    - Arithmetic overflow
+    - Access forbidden memory locations
+  - Operating system cannot grant request of
+  application
+- Accounting
+  - Collect usage statistics  
+  - Monitor performance
+  - Used to anticipate future enhancements
+  - Used for billing purposes
+  - Check out the log files of a Unix system
+    - Where do you find this information?
+### **Operating System**
+- Responsible for managing resources
+An OS is just a program that is executed
+- ![alt text](imgs/compsys.png)
+### **Kernel**
+- Portion of operating system that is in main
+memory
+- Contains most frequently used functions
+Also called the nucleus
