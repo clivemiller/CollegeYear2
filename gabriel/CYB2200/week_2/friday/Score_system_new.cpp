@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdio.h>
-#include <cstdio>
 using namespace std;
 
 //This program gets up to 10 scores from a students, calculates the average and final grade
@@ -31,21 +30,23 @@ int main()
   cout << "Enter up to 10 student's scores (0-100) (if done, enter -1 to stop): ";  
   cout << endl;
   for (int i = 0; i< 10; i++)
-    { cout << "Score " << i+1 << ": ";
-      int temp;
-      cin >> temp;
-   
-      //  cout << "  temp is " << temp << endl;
-      if (temp != -1)
+  {
+    cout << "Score " << i+1 << ": ";
+    int temp;
+    cin >> temp;
+    
+    //  cout << "  temp is " << temp << endl;
+    if (temp != -1)
     {
       scores[i] = temp;
       number_of_score++;
       sum = sum + temp;
     }
-      else{
-    break;
-      }
+    else
+    {
+      break;
     }
+  }
   
   //calculate the average score
   average = sum / number_of_score;
