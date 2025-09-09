@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <limits>
 using namespace std;
 
 //This program gets up to 10 scores from a students, calculates the average and final grade
@@ -22,17 +23,23 @@ int main()
   cout << "\n---------------------------------------\n";
   cout << "Welcome to the scoring system!" <<endl;
   cout << "Enter student's name:" ;  
-  scanf("%s", name);
+  cin.clear();
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  fgets(name, sizeof(name), stdin);
   cout << "\nPlease enter student ID: ";
-  scanf("%s", id);
+  cin.clear();
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  fgets(id, 9, stdin);
   
 
-  cout << "Enter up to 10 student's scores (0-100) (if done, enter -1 to stop): ";  
+  cout << "Enter up to 10 student's scores (0-100) (if done, enter -1 to stop): ";
   cout << endl;
   for (int i = 0; i< 10; i++)
   {
     cout << "Score " << i+1 << ": ";
     int temp;
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin >> temp;
     
     //  cout << "  temp is " << temp << endl;
@@ -68,8 +75,18 @@ int main()
   cout << "Based on the average score, final grade is: " << grade << endl;
 
   cout << "looks good? (Yes or No)";
-  cin.ignore();
-  cin >> comments;  
+  cin.clear();
+  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+  size_t i = 0;
+  int ch;
+  while ((ch = getchar()) != '\n' && ch != EOF)
+  {
+    if (i < sizeof comments - 1)
+    {
+      comments[i++] = (char)ch;
+    }
+  }
+  comments[i] = '\0';
 
   cout << "Comments - Looks good? - " << comments << endl << endl;
   cout << "Student name: " << name << endl;
