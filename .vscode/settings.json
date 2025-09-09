@@ -2,5 +2,6 @@
     "cSpell.words": [
         "cout",
         "endl"
-    ]
+    ],
+    "markdown.validate.enabled": true
 }
