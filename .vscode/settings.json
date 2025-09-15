@@ -1,6 +1,9 @@
 {
     "cSpell.words": [
         "cout",
+        "endl",
+        "interproccesses",
+        "interruptables",
         "endl"
     ],
     "markdown.validate.enabled": true,

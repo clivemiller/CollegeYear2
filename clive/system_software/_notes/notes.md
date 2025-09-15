@@ -123,3 +123,24 @@ gcc -std=c11 -Wall -Wextra -o app main.c
 g++ -std=c++20 -Wall -Wextra -o app main.cpp
 ```
 
+## ELF - Relocatable Object File
+- ELF (Executable and Linkable Format) file produced by a compiler or assembler but not yet linked into a complete program or shared library.
+    - Purpose: Contains code and data that can be combined by the linker (ld) with other relocatable files to form an executable or a shared object.\
+
+## Linux Startup Pseudo Code
+```ass
+/* crti.o */
+
+_start: 
+    call __libc_init_first          /* entry point in .text */
+    call _init                      /* startup code in .text*/
+    call atexit                     /* startup code in  */
+    /* set up arg list for main */
+    call main                       /* */
+    call _exit                      /* */
+```
+
+## static vars can make a program thread unsafe
+- strtok() uses a static var
+- same readdir
+- both of these are not thread safe

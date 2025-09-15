@@ -259,3 +259,68 @@ An OS is just a program that is executed
 memory
 - Contains most frequently used functions
 Also called the nucleus
+
+### Time Sharing
+- Using multiprogramming to handle multiple interactive job
+- Processor's time is shared among multiple users
+- Multiple users simultaneously access the system through terminals
+
+## Modern Operating systems
+
+- Features
+  - Micro Kernel architecture
+    - Assigns only a few essential functions to the kernel
+      - address spaces
+      - interproccesses
+  - Multithreading 
+    - Process is divided into threads that can run concurrently
+      - Thread
+        - dispatchable unit of work
+        - executes sequentially and is interruptables
+  - Symmetric Multiprocessing 
+     - There are multiple processors
+     - these share the same main memory
+     - all processors cab perform the same functions
+  - Distributed OPerating Systems
+    - 
+    - 
+    - 
+  - Object-Oriented Design
+
+## Kernal
+- memory
+- i/o
+- hardware abstraction layer
+- device drivers
+  - low level user request -> i/o calls
+- windowing and graphical user interface
+
+## Windows executive 
+- i/o manager
+- cache manager
+- object manager
+- plug and play manager
+- power manager
+- security reference monitor
+- virtual memory manager
+- process/thread manager
+- config manager
+- local procedure call (LPC) facility
+
+## User-Mode Processes 
+- Special system support processes
+  - logon process and the session manager
+- service processes
+- env subsystems
+- user applications
+
+## Client Server model
+- Simplifies the Executive
+  - Possible to construct a variety of APIs
+- Improves reliability
+  - each service runs on a separate process with its own partition of memeory
+  - clients cannot not directly access hardware
+- Provides a uniform mechanism for applications to communicate via LPC
+- Provides base for distributed computing 
+
+## Threads and SMP
