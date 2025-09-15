@@ -320,3 +320,13 @@ int main() {
 }
 // "5 plus 3 is 8", is a string, its length is 13
 ```
+
+## Metadata/Metacharacters
+
+### Metadata
+- Metadata accompanies the main data and provides info about it
+- Problems:
+  - Embedded delimiters
+    - delimiters are used to denote the termination of a field
+    
+  - Truca
