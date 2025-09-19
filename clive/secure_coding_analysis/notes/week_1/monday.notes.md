@@ -347,3 +347,69 @@ int main() {
     - blacklist (like a ban)
     - whitelist (ony some allowed)
 - Encoding metacharacters (escaping)
+
+## Types
+
+### Typed vs Untyped langs
+- C/C++ 
+  - strictly typed
+- Javascript/python
+  - untyped
+
+### Data types
+- Primary
+  - Integer 
+  - Char
+  - Bool
+  - Floating Point
+  - Double floating point
+  - void
+  - wide char
+- Derived
+  - Function
+  - array
+  - Pointer
+  - Reference
+- user defined
+  - class
+  - struct
+  - union
+  - enum
+  - typedef
+
+### Why do we need types
+- in our eyes, its easy to remember what stuff is
+  - int i = 90 
+  - double k = 4.90
+  - char c = 'c'
+- But for the compiler, types are used to determine memory space
+- It also tells the compiler how to process the data
+
+### Data storage
+- C data types:
+  - char, signed/unsigned char take 1 byte of storage
+  - Int
+    - short int - 2 byte 
+    - int - 4 bytes
+    - long int - 4/8 bytes
+    - long long int - 8 bytes
+  - floats
+    - float - 4 bytes
+    - double - 8 bytes
+    - long double - 12 bytes
+
+#### Signed Ints vs unsigned ints
+- 1byte = 8bits
+- 8 bits can hold 0, 255 unsigned 
+- 8 bit can hold -128, 127 
+
+### Int representation
+- signed and magnitude
+  - the sing of the number is stored in the sign bit
+  - 0 -> positive 
+  - 1 -> negative
+  - Problem 00000000 = postive 0, 10000000 = neg 0 (invalid)
+- The sign bit is 1 if the number is negative and 0 if the number is positive.
+  - Positive values can be read directly from the value bits.
+  - Negative values can't be read directly; the whole number must be negated first.
+  - In ones complement, a number is negated by inverting all its bits
