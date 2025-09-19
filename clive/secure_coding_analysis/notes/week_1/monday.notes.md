@@ -328,5 +328,22 @@ int main() {
 - Problems:
   - Embedded delimiters
     - delimiters are used to denote the termination of a field
-    
-  - Truca
+  - Truncation
+  
+### Filtering
+- 3 options
+  - detect erroneous input and reject what appears to be an attack
+  - detect and strip dangerous characters
+  - detect and encode dangerous character with a metacharacter escape sequence
+
+### Eliminating Metacharacters
+- Reject illegal requests
+  - any request containing illegal metacharacters is simply discarded processing terminates
+  - fewer things can go wrong in the handling 
+  - the application may be unfriendly
+- Strip dangerous characters
+  - filters modify the input to get rid of any violations
+  - filters need to be implemented carefully
+    - blacklist (like a ban)
+    - whitelist (ony some allowed)
+- Encoding metacharacters (escaping)

@@ -4,7 +4,8 @@
         "endl",
         "interproccesses",
         "interruptables",
-        "endl"
+        "metacharacter",
+        "metacharacters"
     ],
     "markdown.validate.enabled": true,
     "files.associations": {

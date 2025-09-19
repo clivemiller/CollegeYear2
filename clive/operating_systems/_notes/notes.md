@@ -287,7 +287,7 @@ Also called the nucleus
     - 
   - Object-Oriented Design
 
-## Kernal
+## Kernel
 - memory
 - i/o
 - hardware abstraction layer
@@ -318,9 +318,94 @@ Also called the nucleus
 - Simplifies the Executive
   - Possible to construct a variety of APIs
 - Improves reliability
-  - each service runs on a separate process with its own partition of memeory
+  - each service runs on a separate process with its own partition of memory
   - clients cannot not directly access hardware
 - Provides a uniform mechanism for applications to communicate via LPC
 - Provides base for distributed computing 
 
 ## Threads and SMP
+- Operating system routines can run on any available processor
+- Different routines can execute simultaneously on different processors 
+- Multiple threads of execution within a single process may execute on different processors simultaneously 
+- Server processes may use multiple threads 
+- Share data and resources between process
+
+## Windows Objects
+- Encapsulation 
+  - Object consists of one or more data items and one or more procedures 
+- Object Class or instance
+  - Create 
+## UNIX
+- Hardware is surrounded by the operating system software
+- Operating system is called the system kernel
+- Comes with a number of user services and interfaces
+  - SHELL
+  - Components of the C compiler
+
+
+## Scheduling and Resource Management 
+- Fairness
+  - Give equal and fair access to resources 
+- Differential responsiveness
+  - ...but, OS also needs to discriminate among different classes of jobs
+- Efficiency 
+  - Maximize throughput, minimize response time, and accommodate as many uses as possible
+
+## System structure
+- View the system as a series of levels
+- Each level performs a related subset of functions
+- Each level relies on the next lower level to perform more primitive functions
+- This decomposes a problem into a number of more manageable sub-problems
+- a system is just a problem solving system
+
+## Process hardware levels
+- Level 1
+  - Lowest 
+  - electronic circuits
+  - objects are registers, memory cells, and logic gates
+  - operations are clearing a register or reading a memory location
+- Level 2
+  - Processor's instruction set 
+  - operations such as add, subtract, load, and store
+- Level 2
+  - Adds the concept of a procedure or subroutines, plus calls/return ops
+- Level 4
+  - Interrupts
+- Level 5
+  - Process as a program in execution
+  - Suspend and resume processes
+- Level 6
+  - Secondary storage devices
+  - Transfer a block of data
+- Level 7
+  - Creates Logical
+
+## Requirements of an operating system 
+- Interleave the execution of multiple processes to maximize processor utilization while providing reasonable response time
+  - Resources made available to multiple applications
+  - Processors switch between multiple applications
+  - The processor and I/O devices can be used efficiently
+- Allocate resources to processes
+  - Process is a program in a execution
+  - It is also an instance of a program running on a computer
+  - it is also the entity that can be assigned to and executed on a processor 
+  - it is also a unit of activity characterized by the execution of a sequence of instructions, a current state and an associated set of system instructions
+  - Process Elements:
+    - identifier
+    - state
+    - priority
+    - program counter
+    - memory pointer
+    - context data
+    - I/O status information
+    - Accounting Information
+  - Process Control Block 
+    - Contains the process elements
+    - Create and manage by the operating system
+    - Allows support for multiple processes
+  - Support interproccesses communication and user creation of processes
+  - Trace of Process
+    - Sequence of instructions that execute for a process
+    - A dispatcher switches the processor from one process to another
+
+### Manage ex
