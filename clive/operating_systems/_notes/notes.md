@@ -443,9 +443,59 @@ Also called the nucleus
 - Parent Termination
 - Parent request 
 
-- 5 state model
+### 5 state model
+- states
   - running
   - ready
   - blocked
   - new
   - exit
+
+- steps
+  - admission into memory (queue)
+  - take it off and dispatch to running
+    - if it finishes, exit
+    - else, timeout back to queue
+    - else if event wait, then blocked, if timeout, to queue
+
+### Two queues
+- You can use a ready queue and a blocked queue in the 5 state model
+
+### Suspended Processes
+- Processor is faster that I/O so all processes could be waiting for I/O
+- Swap these processes to disk to free up more memory 
+- Blocked state becomes suspend state when swapped to the disk
+- Two new states:
+  - Blocked/Suspend
+  - Ready/Suspend
+- suspend models
+- ![alt text](imgs/onesuspendqueue.png)
+- ![alt text](imgs/twosuspendqueue.png)
+- Reasons for process suspension
+  - swapping
+  - other os reason (if the process is causing issues)
+  - interactive user request
+  - timing
+  - parent process request
+
+### Process Description
+- The os controls events with the system, It:
+  - schedules and dispatches processes for execution by the processor
+  - allocates resources to processor
+  - responds to requests by user processes for basic services
+- Fundamentally, we can think of the OS as that entity that manages the use of the system resources
+- OS Control Structures
+  - Information about the current status of each process and resource
+  - Tables are constructed for each entity the operating system manages
+- OS Tables
+  - Memory
+    - Memory tables keep track of:
+      - allocation of main memory to processes
+      - allocation of secondary memory to processes
+      - protection attributes for access to shared memory regions
+      - information needed to manage virtual memory
+  - I/O
+    -
+  - File
+  - Processes
+    - ![alt text](imgs/ostables.png)

@@ -2,6 +2,16 @@
 
 **Date:** 8/25/2025
 
+### Contents
+- Lecture 1: Jia Song
+- Lecture 2: Basic Security Concepts
+- Lecture 2: Continuing Basic concepts
+- Lecture 3: C-style strings
+- Metadata/Metacharacters
+- Types
+- Integer overflow/underflow
+- Problems with type conversions
+
 ## Lecture 1: Jia Song
 - Jia Song has PhD in Computer Science
   - Email: [Jsong@uidaho.edu](mailto:Jsong@uidaho.edu) (Preferred)
@@ -45,7 +55,7 @@
 - Apply knowledge to perform Software Security Analysis using common tools
 - etc.
 
-## Lecture 2 : Basic Security Concepts
+## Lecture 2: Basic Security Concepts
 
 ### Computer System, computer security, CIA triad
 - Computer Security:
@@ -85,7 +95,7 @@
 - **Outside attack**
   - attacks initiated by an outsider, usually an unauthorized user of the target systems
 #### Controls/Countermeasures
-Prevent threats from exercising vulnerabilities (before or after the fact)
+Prevent threats from exercising vulnerabilities (before or after the fact):
 - **Prevent** it, by blocking the attack or closing the vulnerability 
 - **Deter** it, by making the attack harder but not impossible
 - **Deflect** it, by making another target more attractive
@@ -114,7 +124,7 @@ Prevent threats from exercising vulnerabilities (before or after the fact)
   - Passwords, ssn, pin
 - Something the user **is**:
   - Fingerprints, retina, face, voice, etc. 
-Something that uses more that one of these is a **MFA** or multi-factor authentication
+- Something that uses more that one of these is a **MFA** or multi-factor authentication
 #### Access control
 - A subject is permitted to access an object in a particular mode, and only such authorized accesses are allowed
   - **Subject**
@@ -434,13 +444,13 @@ int main() {
 - Simple Conversions
   - Casts (int age; is a cast)
   - Assignment statements
-    ```C
+    ```c
     short int fred;
     int bob = -10;
     fred = bob;
     ```
   - type conversion func args
-    ```C
+    ```c
     int dostuff(int num, unsigned int length);
 
     void func(void) {
@@ -452,7 +462,7 @@ int main() {
     }
     ```
   - type conversions func returns -
-    ```C
+    ```c
     char func(void) 
     {
       int a = 42;
@@ -474,3 +484,6 @@ int main() {
     - if the source is unsigned, propagates the value 0 to all high bits
   - sign extension
     - of the source is signed, propagates the sign bit to all high bits
+
+- narrowing
+  - when converting from a wider data type to a narrower type, the machine uses only one mechanism, truncation
