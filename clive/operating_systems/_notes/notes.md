@@ -407,5 +407,45 @@ Also called the nucleus
   - Trace of Process
     - Sequence of instructions that execute for a process
     - A dispatcher switches the processor from one process to another
+## Processes
+### Process models
+- Two State process model
+  - Process may be in one of two states:
+    - Running 
+    - Not-running
+- Not-Running Process in a queue
+  - Enters > queue > dispatch > processor > pause > queue > repeat until exit
 
-### Manage ex
+### Process Creation
+- New batch job
+  - the operating system is provided with a batch job control stream, usually on a tape or disk. When the os
+  is prepared to take on new work, it will read the next sequence of job control commands
+- Interactive log on 
+  - a user at a terminal logs onto the system
+- Created by the OS to provide a service
+  - the os can create something to do some work for the program without the user having to wait (printing etc)
+- Spawned by existing processes
+  - For the purposes of modularity or to exploit parallelism, a user program can dictate the creation of a number of processes
+
+### Process Termination
+- Normal completion
+- Time limit exceeded
+- Memory unavailable 
+- Bounds violation
+- Protection Error
+- Arithmetic Error
+- Time overrun
+- I/O failure
+- Invalid Instruction
+- Privileged Instruction
+- Data Misuse
+- Operator or OS Intervention
+- Parent Termination
+- Parent request 
+
+- 5 state model
+  - running
+  - ready
+  - blocked
+  - new
+  - exit

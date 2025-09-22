@@ -408,8 +408,69 @@ int main() {
   - the sing of the number is stored in the sign bit
   - 0 -> positive 
   - 1 -> negative
-  - Problem 00000000 = postive 0, 10000000 = neg 0 (invalid)
+  - Problem 00000000 = positive 0, 10000000 = neg 0 (invalid)
 - The sign bit is 1 if the number is negative and 0 if the number is positive.
   - Positive values can be read directly from the value bits.
   - Negative values can't be read directly; the whole number must be negated first.
   - In ones complement, a number is negated by inverting all its bits
+
+## Integer overflow/underflow
+
+## Problems with type conversions
+
+### Type Conversion
+- We want to convert one data type to another
+  - explicit type conversions
+    - the program knows
+  - implicit type conversions
+    - the compiler does it behind the scenes
+- conversions can lead to lost or misinterpreted data
+- conversions rules - the general rules C uses when converting between types
+  - simple conversions
+  - integer promotions
+  - arithmetic conversions
+
+### Conversion Rules
+- Simple Conversions
+  - Casts (int age; is a cast)
+  - Assignment statements
+    ```C
+    short int fred;
+    int bob = -10;
+    fred = bob;
+    ```
+  - type conversion func args
+    ```C
+    int dostuff(int num, unsigned int length);
+
+    void func(void) {
+      char a = 42;
+      unsigned short b = 43;
+      long long int c;
+
+      c = dostuff(a,b); // in this case the vars are converted to the needed type
+    }
+    ```
+  - type conversions func returns -
+    ```C
+    char func(void) 
+    {
+      int a = 42;
+      return a; // need char, a = int, so type converts
+    }
+    ```
+  - Simple conversions rules
+    - value-preserving conversion
+      - if the new data type can match all possible values of the old type, the conversion
+      is said to be value preserving
+    - value changing conversion 
+      - the old type can contain values that cant be represented with the new
+    
+### int types
+- widening
+  - converting from a narrow type to a wider type
+- The machine typically copies the bit pattern from the old var to the new one, then fills the rest of the value bits with 1s or 0s depending on the type
+  - zero extension
+    - if the source is unsigned, propagates the value 0 to all high bits
+  - sign extension
+    - of the source is signed, propagates the sign bit to all high bits
