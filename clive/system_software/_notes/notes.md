@@ -144,3 +144,51 @@ _start:
 - strtok() uses a static var
 - same readdir
 - both of these are not thread safe
+
+## Binary File Formats
+- **a.out (assembler output)**
+    - file format in older versions of unix for executables, object code, and in later systems, shared-libraries
+- **COFF (Common Object File Format)**
+    - a spec of  a format for exe, object code, and shared library computer files used on UNIX systems. 
+    - "replaced a.out", laid basis for XCOFF, replaced by ELF
+- **XCOFF (eXtended COFF)**
+- **ELF (Executable and Linking Format)**
+    - a primary object format for many OSs including FreeBSD or Linux
+    - Three Forms:
+        - Executable files (no convention)
+        - Relocatable object files (.o)
+        - Shared object files (.so, libraries)
+- **Mach-O (Mach object file format)**
+    - a file format for executables, object code, shared libraries, dynamically loaded code, and core dumps.
+    - was more extensibility and faster access to info in the symbol table
+    - once used by NeXTSTEP, mac os, and darwin
+- **PE (Portable Executable)**
+    - executables, object code, DLLs, 32/64 bit versions of windows
+    - Portable refers to its versatility
+    - needed for the windows OS loader to manage wrapped exe code
+    - is used for EXE, DLL, SYS, and others
+    - Pe is a modified version of the COFF format
+
+## parts of a.out
+
+- **exec header**
+    - only mandatory part
+    - contains parameters used by the kernel to load a binary file into memory and exe it
+    - the link editor ld needs this info to combine a binary file with other binary files
+- **text segment**
+    - contains machine code and related data that are loaded into memory when a program executes.
+    - May be loaded read-only
+- **data segment**
+    - Contains initialized data
+    - always loaded into writable memory
+- **text relocations**
+    - Contains records used by the link editor to update pointers in the text segment when combining binary files
+- **data relocations**
+    - Like the text relocation section, but for data segment pointers.
+- **symbol table**
+    - Contains records used by the link editor to cross-reference
+    the addresses of named variables and functions (symbols)
+    between binary files.
+- **string table**
+    - Contains the character strings corresponding to the symbol
+    names.

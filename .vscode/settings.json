@@ -5,7 +5,9 @@
         "interproccesses",
         "interruptables",
         "metacharacter",
-        "metacharacters"
+        "metacharacters",
+        "XCOFF",
+        "XTSTEP"
     ],
     "markdown.validate.enabled": true,
     "files.associations": {
