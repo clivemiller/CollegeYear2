@@ -487,15 +487,85 @@ Also called the nucleus
 - OS Control Structures
   - Information about the current status of each process and resource
   - Tables are constructed for each entity the operating system manages
-- OS Tables
-  - Memory
+
+### OS Tables
+  - ![alt text](imgs/ostables.png)
+  - Memory Tables
     - Memory tables keep track of:
       - allocation of main memory to processes
       - allocation of secondary memory to processes
       - protection attributes for access to shared memory regions
       - information needed to manage virtual memory
-  - I/O
-    -
-  - File
-  - Processes
-    - ![alt text](imgs/ostables.png)
+  - I/O Tables
+    - used by os to keep track of I/O info
+  - File Tables
+    - keep track of :
+      - existence of files
+      - location on secondary memory
+      - current status
+      - attributes
+      - sometimes this information is maintained by a file management system
+  - Process Table
+    - Manage processes
+      - where they are located
+      - attributes in the process control block
+        - program
+        - data
+        - stack
+### Process Image
+- user data
+  - the modifiable part of the user space; may include program data, a user stack area, and programs that may be modified
+- user program
+  - the program to be executed (usually in binary)
+- system stack
+- process control block
+
+### Process Control Block 
+- **PID (process identification)**
+  - identifiers
+    - numeric ids that may be stored with the process control block
+      - id of the process
+      - id of the process that created this process (parent)
+      - user id
+- **Process State information**
+  - user-visible registers
+    - a user-visible register is one that may be referenced by means of the machine lang that the processor executes while in user mode. Typically, there are from 8-32 of these registers, although some RISC implementations have over 100
+  - Control and status registers
+    - the are several processor registers that are employed to control the operation of the processor:
+      - Program counter
+      - condition codes
+        - sign, zero, carry, equal, overflow, ect...
+      - status info
+        - interrupt info, flags, exe mode
+  - Stack Pointers 
+    - each process has one or more last-in-first-out (LIFO) system stacks associated with it
+    - A stack is used to store params and calling addresses for procedure and system calls
+    - The stack pointer points to the top of the stack
+- **Process Control Info**
+  - Scheduling and state info
+  - this info is needed by the OS to preform its scheduling function
+    - Process State
+      - defines the readiness of the process to be scheduled for execution
+        - running, ready, waiting, halted
+    - Priority
+      - one or more fields may be used to describe the scheduling priority of the process
+      - example values: default, current, highest-allowable
+    - Scheduling-related info
+      - this will depend on the scheduling algorithm used. 
+      - Examples:
+        - amount of time the process has been waiting 
+        - amount of time the process executed the last time it was running
+    - Event
+      - Identity of the event the process is awaiting before it can be resumed
+  - Data Structuring 
+    - a process may be linked to other processes in a queue, ring, or some other structure
+    - the process control block can contain pointers to other processes to support structures like parent child relationships
+  - Interprocess Communication
+    - various flags, signals, and messages may be associated with communication between two independent processes. Some or all of this info may be maintained in the PCB
+  - Process Privileges 
+    - Processes can be granted privileges
+  - Memory Management
+    - pointers to segment/page tables that describe the virtual memory assigned to the process
+  - Resources Ownership and Utilization
+    - Resources controlled by the process may be indicated, such as opened files. A history of utilization of the processor or other resources may also be included; this information may be needed by the scheduler
+    
