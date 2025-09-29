@@ -102,23 +102,6 @@ int main()
       repeatID = true;
       cout << "Invalid input – please enter a 9 character UserID following this format: ABC-12345! \n";
     }
-
-    /*if (is_all_digits(tempID) == 1 && atoi(tempID) != -1)
-    {
-      scores[i] = atoi(tempID);
-      number_of_score++;
-      sum = sum + atoi(tempID);
-    }
-    else if (is_all_digits(tempID) == 0 && atoi(tempID) == -1)
-    {
-      triggeredEnd = true;
-      break;
-    }
-    else
-    {
-      repeat = true;
-      cout << "Invalid input – please try again! \n";
-    }*/
   }
   while (repeatID == true);
   
@@ -154,11 +137,11 @@ int main()
       }
       
       // cout << "  temp is " << temp << endl;
-      if (is_all_digits(temp) == 1 && atoi(temp) != -1 && atoi(temp) >= 0 && atoi(temp) <= 100)
+      if (is_all_digits(temp) == 1 && atoi(temp) >= 0 && atoi(temp) <= 100)
       {
-        scores[i] = atoi(temp);
-        number_of_score++;
-        sum = sum + atoi(temp);
+          scores[i] = atoi(temp);
+          number_of_score++;
+          sum += atoi(temp);
       }
       else if (is_all_digits(temp) == 0 && atoi(temp) == -1)
       {
@@ -200,18 +183,42 @@ int main()
   cout << "Based on the average score, final grade is: " << grade << endl;
 
   cout << "looks good? (Yes or No) \n";
-  int c = getchar();
-  if (c != '\n' && c != EOF)
-    ungetc(c, stdin);
-  size_t i = 0;
-  while ((c = getchar()) != '\n' && c != EOF)
+
+  bool validResponse = false;
+  do
   {
-    if (i+1 < sizeof(comments))
+    memset(comments, 0, sizeof(comments));
+
+    char temp[10] = "";
+    if (fgets(temp, sizeof(temp), stdin))
     {
-      comments[i++] = (char)c;
+      size_t n = strlen(temp);
+      if (n && temp[n-1] == '\n')
+        temp[n-1] = '\0';
+      else
+      {
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF) {}
+      }
+    }
+
+    for (size_t j = 0; j < strlen(temp); j++)
+    {
+      temp[j] = toupper((unsigned char)temp[j]);
+    }
+
+    if (strcmp(temp, "YES") == 0 || strcmp(temp, "NO") == 0 ||
+        strcmp(temp, "Y") == 0   || strcmp(temp, "N") == 0)
+    {
+      strncpy(comments, temp, sizeof(comments) - 1);
+      validResponse = true;
+    }
+    else
+    {
+      cout << "Invalid input – please enter YES, NO, Y, or N: \n";
     }
   }
-  comments[i] = '\0';
+  while (!validResponse);
 
   cout << "Comments - Looks good? - " << comments << endl << endl;
   cout << "Student name: " << name << endl;
