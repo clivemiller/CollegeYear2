@@ -31,3 +31,14 @@ __**Wed Sep 24 Class Notes**__
 - Any security issues related to using that specific programming language? (eg, with C/C++, data type, buffer overflow, etc.)
 - It would be nice if you can find 1-2 examples of vulnerable code.
 - References on the slides (where you got your information)
+
+## PRESENTATION RUBRIC
+
+- Rubric for the presentation will be posted soon.
+- It is an opportunity to do research and learn something new on your own.
+- From the presentation, strive for:
+  - Teamwork
+  - Research you have done (your efforts)
+  - Not reading from the slides (talk and explain, share what you learned with everyone in the class)
+
+## 
