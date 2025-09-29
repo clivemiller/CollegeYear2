@@ -487,3 +487,24 @@ int main() {
 
 - narrowing
   - when converting from a wider data type to a narrower type, the machine uses only one mechanism, truncation
+
+### Int conversion errors
+- example:
+  - juice = apple + orange  (valid)
+  - if (apple > orange) (??? what do we compare?)
+- Hence: hidden type conversions -> transform both operands into a comparable data type
+  - When does this happen?
+    - +, -, *, /, %, ...
+    - Relational/equality : <, >, <=, >=, ==, !=
+    - bitwise : &, etc
+
+- Integer promotions 
+  - int types smaller than int are promoted when an operating is performed on them
+  - promoted types (if result is int)
+    - unsigned/signed char
+    - unsigned/signed short
+
+- Rule 1:
+  - floating points take precedence
+    - if one arg is a floating point, the other arg is converted
+    - if one floating point is less precise that the other, it is converted to be more precise

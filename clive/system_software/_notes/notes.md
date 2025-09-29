@@ -192,3 +192,5 @@ _start:
 - **string table**
     - Contains the character strings corresponding to the symbol
     names.
+
+## ELF

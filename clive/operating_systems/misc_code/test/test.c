@@ -15,8 +15,8 @@ int testForLoop(int loopNum, int numToAdd) {
 
 int main(void) {
     printf("Hello, world!\n");
-    printf("Test: %d\n", test(5));
-    printf("Test Loop: %d\n", testForLoop(10, 1));
+    // printf("Test: %d\n", test(5));
+    // printf("Test Loop: %d\n", testForLoop(10, 1));
 
     return 0;
 }
