@@ -569,3 +569,122 @@ Also called the nucleus
   - Resources Ownership and Utilization
     - Resources controlled by the process may be indicated, such as opened files. A history of utilization of the processor or other resources may also be included; this information may be needed by the scheduler
     
+## Threads
+- Threads are contained in processes
+- They contain some information
+  - an execution state (running, ready, etc.)
+  - a saved thread context when not running
+    • may view a thread as an independent program counter operating within a process
+  - an execution stack
+  - some per-thread static storage for local variables
+  - access to the memory & resources of its process
+
+### Thread States
+- **Spawn**
+  - when process is spawned
+  - thread may spawn other threads
+  - each thread has its own:
+    - register context, state space, and place in ready queue
+- **Block**
+  - when thread waits for event
+  - saves user registers, PC and stack pointer
+- **Unblock**
+  - when blocking event occurs
+  - thread is moved to ready queue
+- **Finish**
+  - register context and stack is deallocated
+
+### Remote Procedure Call
+- database 
+- money transactions
+- apis
+- ![RPC](imgs/rpc.png)
+
+### Multithreading with multi processes
+- ![multithreading](imgs/multithreading.png)
+
+### ULT over KLT
+- Threads switching does not require kernel mode privileges in ult
+  - saves two mode switches
+- Application specific scheduling
+  - applications may prefer their own specific scheduling algorithm
+- ULT can run on any OS
+
+### Bad things about ULT
+- Many OS sys calls are blocking
+  - so if ult exe such call, all threads within its process are blocked
+- in a pure ult strategy, a multithreading app cannot take advantage of multiprocessing
+  - no concurrency
+
+## Windows
+### Windows Processes
+- Implemented as objects
+- An executable process may contain one or more threads
+- Both processes and thread objects have built-in synchronization capabilities
+
+### Windows Process Object
+- Object Type
+  - PID
+  - Security Descriptor
+  - Base priority
+  - Default processor affinity
+- Object Body Attributes
+  - Quota limits
+  - Execution time
+  - I/O counters
+  - VM operation counters
+  - Exception/debugging ports
+  - Exit Status
+- Services
+  - Create/Open/Query/Terminate
+
+### Windows Thread Object
+- Object Type
+  - Thread ID
+  - Thread Context
+  - Dynamic priority
+  - Base priority
+  - Default processor affinity
+- Object Body Attributes
+  - thread data 
+- Services
+  - Create/Open/Query/Terminate/Current Thread
+  - other info
+
+### Windows 2000 Thread States
+- Runnable
+  - Ready
+  - Standby
+  - Running
+- Not Runnable
+  - Waiting
+  - Transition
+  - Terminated
+
+### Solaris
+- Process includes the users address space, stack, and PCB
+- User-level threads
+- Lightweight processes (threads)
+- Kernel threads
+
+### Linux Task Data Structure
+- State
+- Scheduling Information
+- Identifiers
+- Interprocess communication
+- links
+- times and timers
+- ...other
+
+### Linux States of a Process
+- Running 
+- Interruptible
+- Uniterruptible
+- Stopped
+- Zombie
+
+
+
+
+
+ 
