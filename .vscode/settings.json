@@ -5,6 +5,8 @@
         "Interproccess",
         "Interprocess",
         "interruptables",
+        "Lamport's",
+        "livelock",
         "metacharacter",
         "metacharacters",
         "XCOFF",

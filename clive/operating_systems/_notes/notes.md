@@ -678,13 +678,144 @@ Also called the nucleus
 
 ### Linux States of a Process
 - Running 
-- Interruptible
-- Uniterruptible
+- Interruptable
+- Uninterruptible
 - Stopped
 - Zombie
 
 
+## Concurrency: Mutual Exclusion 
+### Central OS Design Themes
+- Multiprogramming
+  - management of multiple processes within a uniprocessor system
+- Multiprocessing
+  - management of multiple processes within a multiprocessor
+- Distributed processing
+  - management of multiple processes executing on multiple, distributed computer systems. 
+  - Clusters are a prime example of this type of system.
 
+### Concurrency
+- critical section
+  - a section of code within a process that requires access to shared resources and which may not be executed while another process is in a corresponding section of code
+- deadlock
+  - a situation in which two or more processes are unable to proceed because each is waiting for one of the others to do something
+- livelock
+  - A situation in which two or more processes continuously change their state in response to other processes without doing anything useful
+- mutual exclusion
+  - The requirement that when one process is in a critical section that accesses shared resources, no other processes may be in critical section that accesses any of those shared resources
+- race condition
+  - a situation in which multiple threads or processes read/write a shared data item, and the final result is dependent on the timing
+- starvation
+  - runnable processes are overlooked indefinitely by the schedular; although it is able to proceed, it is never chosen
 
+### Difficulties of Concurrency
+- Sharing of global resources
+- Operating system managing the allocation of resources optimally
+- Difficult to locate programming errors
 
- 
+### Currency
+- Communication among processes
+- Sharing resources
+- sync of multiple processes
+- Allocation of processor time
+
+### Concurrency
+- Multiple applications
+  - multiprogramming
+- Structured application
+  - app can be a set of concurrent processes
+- OS structure
+
+### OS concerns 
+- keep track of processes
+- allocate and deallocate resources
+  - processor time
+  - memory
+  - files
+  -I/O
+- Protect data and resources
+- Output of process must be independent of the speed of execution of other concurrent processes
+
+### Process Interaction
+- Processes unaware of each other
+- Processes indirectly aware
+- Processes aware
+- Degree of awareness / control problems / timing and other issues
+- Process issues:
+  - mutual exclusion
+    - Critical sections
+      - one at a time
+    - processes halting while interfering
+    - processes must not be denied access to a critical resource if that resource is free
+    - time limit
+    - Mutual exclusion machine instructions
+      - Advantages
+        - applicable to any number of processes on either a single processor or multiple processors 
+        sharing main memory
+        - It is simple and therefore easy to verify
+        - It can be used to support multiple critical sections
+      - Downsides
+        - Busy waiting consumes processor time
+        - Starvation is possible when a process leaves a critical section and more than on process is waiting
+        - Deadlock
+          - if a low priority process has the critical section, but a higher process needs itm tbe higher process will obtain the processor to wait for the critical with will not be returned 
+      - Data coherence
+
+### Mutual exclusion algorithms
+- Lamport's bakery algorithm
+  - a mutual exclusion algorithm to prevent concurrent threads from entering critical sections concurrently
+  - Analogy
+    - bakery with a numbering machine
+    - each customer receives a number
+      - numbers increment by one
+    - global counter displays number of current customers
+      - all others wait in queue
+    - after baker is done serving a customer the next number is displayed
+- Peterson's algorithm
+- Dekker's algorithm
+- All stem for the issues posed by Dijkstra's concurrent programming problem
+
+### Producer/Consumer Problem
+- One or more producers are generating data and placing these in a buffer
+- A single consumer is taking items out of the buffer one at a time
+- Only one producer or consumer may access the buffer at any one time 
+
+### sudo producer/consumer code 
+```C
+// producer:
+while (true) {
+  /* produce item v */
+  buffer[in] = v;
+  in++;
+}
+
+// consumer:
+while (true) {
+  while (in <= out) {
+    /* do nothing */
+  }
+  w = buffer[out];
+  out++;
+  /* consume w */
+}
+
+// Producer with a circular buffer
+while (true) {
+  /* produce item v */
+  while ((in + 1) % n == out)
+    // do nothing
+  buffer[in] = v;
+  in = (in + 1 ) % n;
+}
+
+// consumer with a circular buffer
+while (true) {
+  while (in == out) {
+    /* do nothing */
+  }
+
+  w = buffer[out];
+  out = ( out + 1 ) % n;
+  /* consume w */
+}
+```
