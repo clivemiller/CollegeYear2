@@ -89,7 +89,7 @@ int main(){
     clearbuffer();
 
    cout << "\n\n--------------------------TASK 3 (Done)----------------------------\n";
-      cout << "\n\n--------------------------TASK 4 (18 pts)----------------------------\n"
+      cout << "\n\n--------------------------TASK 4 (18 pts)----------------------------\n";
     
   /* Task 4: explain why you got correct or overflowed value in the comments next to each of the following 10 examples.
      Note: Your answer should focus on any integer promotions and type conversions happened.
@@ -99,120 +99,135 @@ int main(){
   //1a, x and y are first integer promoted to be int before the addition. Then the result of x+y (int) is stored in a register, the register is big enough to hold the result of 20000+20000, so output value is the correct value.
   short x_short = 20000;
   short y_short = 20000;
-  cout << "1a. x + y = " << x_short+y_short << endl;
+  cout << "1a. x + y = " << x_short + y_short << endl;
 
-  //1b your explaination...
+  //1b, x and y are converted to int before the addition, so the addition result is 40000, but when you try to assign that value to a signed short, which doesn't have enough space to hold 40000, it overflows and becomes a large negative number.
+  x_short = 20000; 
+  y_short = 20000; 
+  short z_short = x_short + y_short; 
+  cout << "1b. short z_short = " << z_short << endl; 
 
-    x_short = 20000; 
-    y_short = 20000; 
-    short z_short = x_short + y_short; 
-    cout << "1b. short z_short = " << z_short << endl; 
+  //1c, x and y are converted to int before the addition, so the addition result is 40000, we then assign that value to a signed int, which is large enough to hold 40000, so the stored value is correct.
+  x_short = 20000; 
+  y_short = 20000; 
+  int z1_int = x_short + y_short; 
+  cout << "1c. int z1_int = " << z1_int << endl; 
 
-    //1c ...
-    x_short = 20000; 
-    y_short = 20000; 
-    int z1_int = x_short + y_short; 
-    cout << "1c. int z1_int = " << z1_int << endl; 
+  //1d, x and y are typecasted to int before the addition (redundant), so the addition result is 40000, we then assign that value to a signed int, which is large enough to hold 40000, so the stored value is correct.
+  x_short = 20000; 
+  y_short = 20000;
+  int z2_int = (int)x_short + (int)y_short; 
+  cout << "1d. int z2_int = " << z2_int << endl;
 
-    //1d
-    x_short = 20000; 
-    y_short = 20000;
-    int z2_int = (int)x_short + (int)y_short; 
-    cout << "1d. int z2_int = " << z2_int << endl;
+
+  //2a, x and y are added together, but since 4 billion is too large a value for a signed int to hold in the register, the value overflows and becomes a large negative value.
+  int x_int = 2000000000; 
+  int y_int = 2000000000; 
+  cout << "2a. x_int + y_int = " << x_int + y_int << endl;
+
+  //2b, x and y are added together and stored in a signed int z, but since 4 billion is too large a value for z to hold, the value overflows and becomes a large negative value.
+  x_int = 2000000000; 
+  y_int = 2000000000; 
+  int z_int = x_int + y_int; //z is out of range now 
+  cout << "2b. z_int = " << z_int << endl; 
   
-
-    //example 2a 
-    int x_int = 2000000000; 
-    int y_int = 2000000000; 
-    cout << "2a. x_int + y_int = " << x_int + y_int << endl;
-
-    //example 2b 
-    x_int = 2000000000; 
-    y_int = 2000000000; 
-    int z_int = x_int + y_int; //z is out of range now 
-    cout << "2b. z_int = " << z_int << endl; 
-    
-    //example 2c 
-    x_int = 2000000000; 
-    y_int = 2000000000; 
-    long long z1_ll = x_int + y_int; 
-    cout << "2c. long long z1_ll = " << z1_ll << endl;
+  //2c, x and y are added together, but since both are integers, and the result of the addition (4 billion) is automatically stored in a signed int, and thus the value is too large to hold in it, the value overflows and becomes a large negative value, regardless of if z is large enough to hold the value.
+  x_int = 2000000000; 
+  y_int = 2000000000; 
+  long long z1_ll = x_int + y_int; 
+  cout << "2c. long long z1_ll = " << z1_ll << endl;
 
 
-    //example 2d 
-    x_int = 2000000000; 
-    y_int = 2000000000;
-    long long z2_ll = (long long)x_int + (long long)y_int; 
-    cout << "2d. long long z2_ll = " << z2_ll << endl;
+  //2d, x and y are first typecasted into long longs, and then added together, and since the result is then stored in a long long before being assigned to z, another long long, and since a long long is large enough to hold 4 billion as a value, the result is as expected.
+  x_int = 2000000000; 
+  y_int = 2000000000;
+  long long z2_ll = (long long)x_int + (long long)y_int; 
+  cout << "2d. long long z2_ll = " << z2_ll << endl;
 
 
-    //example 3a
-    long long  x_ll = 2000000000; 
-    long long  y_ll = 2000000000; 
-    cout << "3a. x_ll + y_ll = " << x_ll + y_ll << endl;
-    
-    //example 3b
-    x_int = 2000000000; 
-    y_ll = 2000000000;
-    long long z3_ll = x_int + y_ll; 
-    cout << "3b. long long z3_ll = " << z3_ll << endl;
+  //3a, x and y are added together and stored as a long long before being printed out, and since a long long is large enough to hold 4 billion as a value, the result is as expected.
+  long long  x_ll = 2000000000; 
+  long long  y_ll = 2000000000; 
+  cout << "3a. x_ll + y_ll = " << x_ll + y_ll << endl;
+  
+  //3b, x is an int, and y is a long long, so when the addition is performed, the int is first promoted to type long long, and the result is stored in z, a signed long long, and since both the result of the addition and z are large enough to hold 4 billion as a value, the result is as expected.
+  x_int = 2000000000; 
+  y_ll = 2000000000;
+  long long z3_ll = x_int + y_ll; 
+  cout << "3b. long long z3_ll = " << z3_ll << endl;
 
 
    
   
 
-   cout << "\n\n--------------------------TASK 5 (18 pts)----------------------------\n";
-  //Let's add checks in the code to detect the overflow before it happening add in checks!
-  //for addition, subtruction, and division operations
-  //for example, for addition operation
-  
+  cout << "\n\n--------------------------TASK 5 (18 pts)----------------------------\n";
+
   int num1, num2, result_add, result_sub, result_div;
-  cout << "For addition operation: " <<endl;
+
+  /* ---------------- ADDITION CHECK ---------------- */
+  cout << "For addition operation: " << endl;
   cout << "    Enter integer1: ";
   cin >> num1;
   cout << "    Enter integer2: ";
   cin >> num2;
 
-  //checks for addition operation
-  if (((num1 > 0) && (num2 >0) && (num1 > (INT_MAX - num2)))||
-      ((num1 < 0) && (num2 <0) && (num1 < (INT_MIN - num2))))
-      {cout << "Integer overflow!" <<endl;
-	exit(1);
-      }
-  else {
-    result_add = num1+num2;
-    cout << "sum of integer1 and integer2 is: " << result_add <<endl;
+  // Check for addition overflow:
+  if (((num1 > 0) && (num2 > 0) && (num1 > INT_MAX - num2)) ||
+      ((num1 < 0) && (num2 < 0) && (num1 < INT_MIN - num2))) {
+    cout << "Integer overflow detected during addition!" << endl;
+  } else {
+    result_add = num1 + num2;
+    cout << "Sum of integer1 and integer2 is: " << result_add << endl;
   }
 
-  //Your turn, for subtraction operation, add checks (6 pts)
+  /* ---------------- SUBTRACTION CHECK ---------------- */
+  // Overflow in subtraction occurs when subtracting a negative number makes the result exceed INT_MAX, or subtracting a positive number makes the result fall below INT_MIN.
 
-  cout << "For subtraction operation: " <<endl;
-  cout << "Enter integer1: ";
+  cout << "\nFor subtraction operation: " << endl;
+  cout << "    Enter integer1: ";
   cin >> num1;
-  cout << "Enter integer2: ";
+  cout << "    Enter integer2: ";
   cin >> num2;
 
-  //your code here
+  // Check for subtraction overflow:
+  if ((num2 < 0 && num1 > INT_MAX + num2) || // positive overflow
+      (num2 > 0 && num1 < INT_MIN + num2)) { // negative overflow
+    cout << "Integer overflow detected during subtraction!" << endl;
+  } else {
+    result_sub = num1 - num2;
+    cout << "Difference of integer1 and integer2 is: " << result_sub << endl;
+  }
 
-  result_sub = num1-num2;
+  /* ---------------- DIVISION CHECK ---------------- */
+  // INT_MIN / -1  (because the result 2147483648 is out of int range). Also, dividing by 0 is undefined and must be caught.
 
-
-  //for division operation, add checks (6 pts)
-  //HINTS:(1) we talked about when integer overflow could happen in division :)
-  //          you need to check for that specific condition
-  //      (2) your code should also check for the divide by 0 problem!
-   cout << "For division operation: " <<endl;
-  cout << "Enter integer1: ";
+  cout << "\nFor division operation: " << endl;
+  cout << "    Enter integer1: ";
   cin >> num1;
-  cout << "Enter integer2: ";
+  cout << "    Enter integer2: ";
   cin >> num2;
 
-  //your code here
+  if (num2 == 0) {
+    cout << "Error: Division by zero is not allowed!" << endl;
+  } else if (num1 == INT_MIN && num2 == -1) {
+    cout << "Integer overflow detected during division!" << endl;
+  } else {
+    result_div = num1 / num2;
+    cout << "Quotient of integer1 / integer2 is: " << result_div << endl;
+  }
 
-  result_div = num1/num2; 
+  /* ---------------- EXPLANATION OF THE ABOVE ----------------
+     Addition overflow:
+       Happens when two large positives exceed INT_MAX,
+       or two large negatives go below INT_MIN.
+     Subtraction overflow:
+       Happens when subtracting a negative from a positive pushes past INT_MAX,
+       or subtracting a positive from a negative drops below INT_MIN.
+     Division overflow:
+       Happens only when dividing INT_MIN by -1.
+       Also must check for divide-by-zero.
+  -------------------------------------------------------- */
 
-
-  //Don't forget to run your program to test whether your checks can catch the integer overflows/underflow.
   
  
 }
