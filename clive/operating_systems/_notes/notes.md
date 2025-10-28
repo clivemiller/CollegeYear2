@@ -819,3 +819,12 @@ while (true) {
   /* consume w */
 }
 ```
+
+## Memory
+### Relocation 
+- programs loaded into memory, the actual mem locations are determined
+- a process may occupy diff partitions which means different abs mem locations during execution
+
+### Addresses
+- Logicla 
+

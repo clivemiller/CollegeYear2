@@ -194,3 +194,111 @@ _start:
     names.
 
 ## ELF
+
+## File Management 
+- File management system consists of system utility programs that run as privileged applications
+- Input to applications is by means of a file
+- Output is saved in a file for long-term storage
+## File System Structure
+- 
+- 
+- 
+
+### File Ops
+- Create 
+- Delete
+- Open 
+- Close 
+- Read 
+- Write
+
+### More
+- Field
+    - Basic element of data
+- Record
+
+### File Terminology 
+- File
+    - Collection of similar records
+    - Treated as a single entity 
+    - Have file names
+    - May restrict access
+- Database
+    - Collection of related data
+
+### Typical Ops
+- Retrieve : r, Insert = i
+    - r_all
+    - r_one
+    - r_next
+    - r_previous
+    - I_one
+
+### File Management Systems
+- The way a user or application may access files
+- Programmer does not need to develop file management software
+
+### File Management System Objectives
+- Meet the data management needs and requirements of the user
+- Guarantee that the data in the file are valid 
+- Optimize performance
+- Provide I/O support for different device types
+- Minimize or eliminate the potential for lost or destroyed data
+- Provide a standardized set of I/O interface routines
+- Provide I/O support for multiple users
+
+### Minimal set of requirements
+- Each user: 
+    - should be able to create, delete, read, write, and modify files
+    - may have controlled access to other user's files
+    - may be able to control the access to their files
+    - should be able to restructure the user's files in a form appropriate to the problem
+    - should be able to move data between files
+    - be able to back up and recover files in case of damage
+    - should be able to access the user's files by using symbolic names
+
+## Device Drivers
+- Lowest level
+- Communicates directly with peripheral devices
+- Responsible for starting I/O operations on a device
+- Processes the completion of an I/O request
+
+### Basic File System 
+- Physical I/O 
+- Deals with exchanging blocks of Data
+- Concerned with the placement of blocks 
+- Concerned with buffering blocks in main memory
+
+### Basic I/O Supervisor
+- Responsible for file I/O
+- Control structures are maintained
+- Concerned with selection of the device on which file I/O is to be performed
+
+### Logical I/O 
+- Enables users and applications to access records
+- Provides general-purpose record I/O capability
+- Mainlines basic data
+
+### Access Method
+- Reflect diff file structures
+- Diff ways to access and process data
+
+### File Management Functions
+- Id and locate a selected File
+- Use a directory to describe the location of all files plus their attributes
+- On a shared system describe user access control 
+- Blocking for access to a file
+- Allocate files to free blocks
+- manage free storage for available blocks
+
+### Criteria for File Org
+- Short access time
+    - needed when accessing a single record
+    - not needed for batch mode
+- Ease of update
+    - A file on CD-Rom will not be updated, so this is not a concern
+- Economy of storage 
+    - should be minimum redundancy in the data
+    - Redundancy can be used to speed access such as an index
+- Simple maintenance 
+- reliability
