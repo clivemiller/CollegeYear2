@@ -302,3 +302,113 @@ _start:
     - Redundancy can be used to speed access such as an index
 - Simple maintenance 
 - reliability
+
+### File Org
+- THE PILE
+    - Data is collected in the order they arrive
+    - Purpose is to accumulate a mass of data and save it
+    - Records may have different fields 
+    - No structure
+    - Record access is by exhaustive search
+    - the Pile is an unordered collection of records. Records are stored as they arrive, one after another, without any particular order or indexing.
+- The Sequential File
+    - Fixed format used for records
+    - Records are the same length
+    - all fields the same (order and length)
+    - Fields names and length are attributes of the file
+    - One field is the key field
+        - Uniquely identifies the record
+        - Records are stored in key sequence
+    - New records are placed in a log file or transaction file
+    - Batch update is performed to merge the log file with the master file
+- Problems accessing records
+    - need to "scan" though file
+    - sequential storage proves limited 
+        - organize sequential file physically based on keys
+- Indexed sequential files
+    - Maintain key characteristics of sequential file
+        - records organized 
+    - two new features
+        - index to file to support random access
+        - overflow file
+
+- Indexing
+    - allows to quickly reach the vicinity of the desired record
+        - Contians key field and a pointer to the main file
+- sequential vs index sequential
+    - say a file contains a million records
+    - seq file: on average 500 000 accesses are required to find a record
+    - index seq: if and index contains 1000 entires, it will take on average 500 accesses to find the key
+- overflow
+
+
+- Direct or Hashed File
+    - Directly accessed a block at a known address
+    - Key field required for each record
+
+### Total Five Methods:
+- Pile: Good attr handling, records mid, retrieval bad
+- Sequential: mid attr handling, records bad, retrieval bad
+- Indexed Sequential: bad attr handling, records mid, retrieval mid
+- Indexed: mid attr handling, records mid, retrieval mid
+- Hashed: bad attr handling, records bad, retrieval mid
+
+### Simple Dir Structure
+- List of entires, one for each file
+- sequential file with the name of the file serving as the key
+- provides no help in organizing the files
+- Forces user to be careful not to use the same name for two diff files
+
+### Two-Level scheme for a Directory 
+- One dir for each user and a master dir
+- master dir contains entry for each user 
+    - provides addr and access control info
+- Each user dir is a simple list of files for that user
+- Still provides no help in structuring collections of files
+
+### Hierarchical, or tree-structured directory
+- Master directory with user directories 
+- files can be located by following a path from the root, or master, dir down various branches (pathname)
+- can have several files with the same file name as long as they have unique path names
+- Current dir is working dir
+- files are referenced relative to the working dir
+
+### File Sharing
+- in a multiuser system, allows files to be shared among users
+- issues 
+    - access rights
+    - management of same time edits
+
+### Access rights 
+- None 
+    - user may not know it exists
+    - User is not allowed to open it
+- execution
+    - user can load and exe
+- Read
+    - user can read for any purpose
+- Append
+    - user can add but not modify or delete
+- Update 
+    - user can view and edit and delete and add
+    - creation or deletion
+- Changing protection
+    - user can change access rights
+- Deletion 
+    - user can delete the file
+- Owners 
+    - has all rights
+    - may grant rights by classes
+        - user
+        - groups
+        - all for public
+
+### Simultaneous Access
+- User may lock an entire file when updating
+- User may lock the individual records during the update 
+- Mutual exclusion and deadlock are issues for shared access
+
+### Fixed blocking 
+- units of I/O
+### Variable Blocking: Unspanned
+### Variable Blocking: Spanning

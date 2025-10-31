@@ -826,5 +826,42 @@ while (true) {
 - a process may occupy diff partitions which means different abs mem locations during execution
 
 ### Addresses
-- Logicla 
+- Logical
 
+### Deadlock
+- resource definitions
+- deadlock is when all processes are blocked
+
+### Consumable Resources
+- Created (produced) and destroyed (consumed)
+- Interrupts, signals, messages, and information in I/O buffers
+- Deadlock may occur if a Receive message is blocking
+- may take a rare combo of events to cause deadlock
+
+### Conditions for deadlock
+- Mutual exclusion
+  - Only one process may use a resource at a time
+- Hold-and-wait
+  - a process may hold allocated resources while awaiting assignment of other
+- No preemption
+  - no resource can forcibly remove someones hold
+- Circular wait
+  - a closed chain of processes exist, such that each process holds at least one resource needed by the next process in the chain
+
+## Paging
+- Partition memory into small, equal, fixed-size chunks called page frames
+- Processes divided into pages as well
+- Page frames and pages are of equal size (pagesize)
+- Operating system maintains a page table for each process 
+  - contains the frame location for each page in the process
+  - Memory address consists of a page number and offset within the page
+- Pages NEED NOT BE contiguous
+- partitions are small
+- program can occupy more than one page 
+
+## Segmentation 
+- all segments of all programs do not have to be of the same length
+- There is a maximum segment length
+- addressing consist of two parts
+  - a segment number and an offset
+- Since segments are not equal, segmentation is similar to dynamic partitioning 
