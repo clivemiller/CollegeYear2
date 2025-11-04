@@ -859,9 +859,63 @@ while (true) {
 - partitions are small
 - program can occupy more than one page 
 
-## Segmentation 
+### Segmentation 
 - all segments of all programs do not have to be of the same length
 - There is a maximum segment length
 - addressing consist of two parts
   - a segment number and an offset
 - Since segments are not equal, segmentation is similar to dynamic partitioning 
+
+### Dynamic partitioning 
+  - Program may occupy more than one partition 
+  - partitions need not be contiguous 
+
+## Virtual Memory
+
+### Hardware and Control Structures
+- Memory refs are dynamically translated into physical addresses at run time
+  - A process may be swapped in and out of main memory such that it occupies different regions
+- Process may be brocken up into pieces that do not need to be located contiguously in main memory
+- All pieces of a process do not need to be loaded in main memory during execution
+
+### Program execution 
+- The OS brings a few pieces of the program into main memory 
+- Resident set - the portion of a process that is in main memory 
+- An interrupt is generated when an address is needed that is not in main memory 
+- The OS places the process is a blocking state
+- Piece of process that contains the logical address is brought into main memory 
+  - OS issues a disk read request
+  - another process dispatched to run while the disk I/O takes place
+  - An interrupt is issued when disk I/O completes which causes the OS to place the affected process in the ready state
+
+### Advantages of breaking up an process
+- More processes may be maintained in main memory
+  - only load in some of the pieces of each process
+- A process may be larger than all of main memory
+
+### Types of Memory
+- Real Memory 
+  - Main memory
+- Virtual Memory
+  - memory on disk 
+  - allows for effective multiprogramming and relieves the user of tight constraints of main memory 
+  - Programming convenience
+
+### Thrashing 
+- Swapping out a piece of a process just before that piece is needed
+- The processor spends most of its time swapping pieces rather than executing user instructions
+
+### Principle of Locality 
+- Program and data references with a process tend to cluster
+- Only a few pieces of a process will be needed over a short period of time
+- Possible to make intelligent guesses 
+- This suggests VM may work efficiently 
+
+### Virtual Memory Support
+- Hardware must support paging and segmentation
+- The OS must be able to manage the movement of pages and/or segments between secondary and main memory
+
+### Paging 
+- Each process has its own page table 
+- Each page table entry contains the frame number of the corresponding page in main memory 
+

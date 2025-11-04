@@ -9,6 +9,7 @@
         "livelock",
         "metacharacter",
         "metacharacters",
+        "SNMP",
         "XCOFF",
         "XTSTEP"
     ],

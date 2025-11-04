@@ -412,3 +412,51 @@ _start:
 - units of I/O
 ### Variable Blocking: Unspanned
 ### Variable Blocking: Spanning
+
+## Networking
+- very important
+- lots of terms
+- many standards and protocols
+
+### Vocab
+- LAN - Local Area Network
+- VLAN - Virtual LAN
+- WAN - Wide Area Network
+- bridge
+- router
+- repeater
+- gateway
+- OSI Model
+- IP - Internet Provider
+- TCP - Transmission Control Protocol
+- UDP - User Datagram Protocol
+- TCP/IP - Protocols used in the internet and other computer networks
+- IP address (v4, v6) 32 bit vs 128 bits
+- "dotted quad format" represents IPv4, e.g. 000.000.000.000
+- URL
+- subnet
+- netmask
+- datagram
+- packet
+- header
+- MAC addresses - Media Access Control Address
+- checksum
+- DNS - Domain Name System
+- NFS - Network File System
+- FTP - File transfer Protocol
+- telnet
+- SSH - Secure Shell 
+- SNMP - Simple Network Management Protocol
+- SMTP - SImple Mail Transfer Protocol
+- ICMP - Internet Control Message Protocol
+- DHCP - Dynamic Host Configuration Protocol
+- HTTP(s) - Hypertext Transfer Protocol (secure)
+- port
+- reliable communication
+- unreliable communication
+- token ring
+
+### basic
+- Local area networks (lans) are defined in terms of the protocol and the topology used for accessing the networking
+- The networking protocol is the set of rules established for users to exchange information
+- The topology is the network architerctjre used the interconnect network equipment
