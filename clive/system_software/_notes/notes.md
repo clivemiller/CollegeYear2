@@ -426,7 +426,7 @@ _start:
 - router
 - repeater
 - gateway
-- OSI Model
+- OSI Model (Open Systems Interconnection) framework that divides computer network functions into seven distinct layers
 - IP - Internet Provider
 - TCP - Transmission Control Protocol
 - UDP - User Datagram Protocol
@@ -457,6 +457,53 @@ _start:
 - token ring
 
 ### basic
-- Local area networks (lans) are defined in terms of the protocol and the topology used for accessing the networking
+- Local area networks (LANs) are defined in terms of the protocol and the topology used for accessing the networking
 - The networking protocol is the set of rules established for users to exchange information
-- The topology is the network architerctjre used the interconnect network equipment
+- The topology is the network architecture used the interconnect network 
+- A token-ring topology is shown in the following figure. In this topology, a "token" (T) is placed in in the data channel
+- OSI - open systems interconnect
+
+### TCP/IP
+- IEEE/ISO Standards
+- High level interface
+    - LAN Management 
+    - Local bridging 
+    - system load protocol
+
+### Client Server
+- a server is a system that provides a specific service for the rest of the network
+- a client is another system that uses the service
+- (DONT HAVE TO BE SEPARATE)
+
+## Servers
+- Network file systems
+- Remote Printing
+- Remote execution
+- Name servers
+- Terminal servers
+- Network-oriented window system
+
+### Layers
+- Application layer
+- Transport layer
+- Internet layer
+- Network interface layer
+
+## Interprocess Communication
+### Pipes
+- An interprocess communication mechanism allowing two or more processes to send information to each other
+- Consider: who | wc -l
+    - bytes form "who" flow through the pipe into wc -l
+    - the -l options on outputs total number of lines in the input
+    - both processes run concurrently; pipe buffers and protects against overflow; suspends reader until more data becomes avaible
+
+- Unnamed Pipes
+    - sys call: int pipe( int fd[2])
+        - pipe() creates an unnamed pipe and returns two file descriptors
+        - the descriptor associated with the "read" end of the pipe is stored in fd[0]
+        - the descriptor associated with the "write" end of the pipe is stored in fd[1]
+        - For example:
+        ```C
+        int fd[2];
+        pipe(fd);
+        ```

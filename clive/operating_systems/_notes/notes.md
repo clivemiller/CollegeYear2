@@ -919,3 +919,119 @@ while (true) {
 - Each process has its own page table 
 - Each page table entry contains the frame number of the corresponding page in main memory 
 
+## Segmentation
+- May be unequal, dynamic size
+- Simplifies handling of growing data structures
+- Allows programs to be altered and recompiled independently
+- Lends itself to sharing data among processes
+- Lends itself to protection
+
+### Segment Tables
+- Each entry contains:
+  - Corresponding segment in main memory
+  - Length of the segment
+  - Bit to determine if segment is already in main memory
+  - Bit to determine if segment has been modified since loaded
+
+### Combined Paging and Segmentation
+- Paging is transparent to the programmer
+- Segmentation is visible to the programmer
+- Each segment is broken into fixed-size pages
+
+### Fetch Policy
+- Determines when a page should be brought into memory
+- **Demand paging**
+  - Only brings pages into main memory when a reference is made to a location on the page
+  - Many page faults when process first started
+- **Prepaging**
+  - Brings in more pages than needed
+  - More efficient to bring in pages that reside contiguously on disk
+
+### Placement Policy
+- Determines where in real memory a process piece is to reside
+- Important in a segmentation system
+- Paging or combined paging with segmentation hardware performs address translation
+
+### Replacement Policy
+- Which page is replaced?
+- Page removed should be the page least likely to be referenced in the near future
+- Most policies predict future behavior on the basis of past behavior
+
+### Frame Locking
+- If frame is locked, it may not be replaced
+- Used for:
+  - Kernel of the operating system
+  - Control structures
+  - I/O buffers
+- Associate a lock bit with each frame
+
+### Basic Replacement Algorithms
+- Optimal policy 
+  - Selects for replacement that page for which the time to the next reference is the longest 
+  - Impossible to have perfect knowledge of future events
+  - This policy is wishful thinking, but can serve as a base-line when post evaluating different policies
+- Least Recently Used
+  - replaces the page that has not been used in the longest time
+  - By the principle of locality, this should be the page least likely to be referenced in the future
+  - Each page could be tagged with the time of last reference. this would require a lot of overhead
+- First-in, First-out 
+  - Treats page frames allocated to a process as a circular buffer
+  - Pages are removed in a round robin style 
+  - simplest replacement policy to implement 
+  - Page that has been in memory the longest is removed
+- Clock policy 
+  - additional bit called use bit
+  - when page is first loaded, use bit is set to 1
+  - When a page is referenced, set it to 1
+  - when it is time to replace a page, first frame that is 0 is replaced
+  - when looking for a replacement, all 1s are set to 0s
+
+### Resident Set size
+- Fixed-allocation
+  - gives a process a fixed number of pages within which to execute
+  - When a page fault occurs one of the pages of that process must be replaced
+- Variable-allocation
+  - Number of pages allocated to a process varies over the lifetime of the process
+
+### Fixed Allocation, Local Scope 
+- Decide ahead of time the amount of allocation to give a process 
+  - if allocation is too small, there will be a high page fault rate
+  - if allocation is too large, there will be too few programs in main memory
+
+### Variable allocation, global scope
+- Easiest to implement
+- Adopted by many operating systems 
+- operating system keeps list of free frames
+- free frame is added to resident set of te process when a page fault occurs
+- if no free frame, replaces one from another process
+
+### Variable allocation, local scope
+- when new process added, allocate number of page frames based on application type, program request or other criteria
+- WHen a page fault occurs, select page from among the resident set of the of process that suffers the fault
+- reevaluate allocation from time to time
+
+### Cleaning Policy
+- Demand cleaning 
+  - a page is written out only when it has been selected for replacement 
+- precleaning 
+  - pages are written out in batches
+- Best approach uses page buffering
+  - Replaced pages are placed in a pool of free frames
+  - Pages can be written out in batches to disk
+  - If a page is referenced again before being written, it can be restored without disk I/O
+  - Balances efficiency of precleaning with flexibility of demand cleaning
+- Load control 
+  - determines the number of processes that will be resident in main memory 
+    - too few processes, many occasions when all processes will be blocked and much time will be spent in swapping
+    - too many, and thrashing occurs
+  
+  ### Process suspension
+  - if the degree of multiprogramming is to be reduced, suspend
+    - lowest priority process
+    - faulting process
+      - this process does not have its working set in main memory so it will be blocked anyway
+    - Last process activated 
+      - This process is least likely to have its working set resident 
+  - Process with the smallest resident set
+    - This process requires the least future effort
+  
