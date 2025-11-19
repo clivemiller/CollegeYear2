@@ -495,7 +495,7 @@ _start:
 - Consider: who | wc -l
     - bytes form "who" flow through the pipe into wc -l
     - the -l options on outputs total number of lines in the input
-    - both processes run concurrently; pipe buffers and protects against overflow; suspends reader until more data becomes avaible
+    - both processes run concurrently; pipe buffers and protects against overflow; suspends reader until more data becomes available
 
 - Unnamed Pipes
     - sys call: int pipe( int fd[2])
@@ -507,3 +507,37 @@ _start:
         int fd[2];
         pipe(fd);
         ```
+    - Rules  apply for read processes
+        - if it reads from pipe where write rnd has been closed, read() returns 0
+        - ...
+    - Rules from writing
+        - if it writes from pipe where read end has been closed, write fails and writer is sent SIGPIPE signal. (termination)
+- Named Pipes
+    - Named Pipes (FIFOs) are less restricted and have a name in the file system. 
+    - can be used easier and exist until deleted
+    - use mkfifo() or mkfifo linux util
+        - mkfifo fileName
+        - mkfifo("myPipe", 0660)
+- Named pipe operation
+    - a special file is added into the file system
+    - Once opened by open()
+        - write() puts data at the end
+        - read() takes data off the end
+    - close()
+
+### Sockets
+- Stream Sockets (connection based TCP) in order 
+- Datagram sockets (UDP), delivery or order not guaranteed
+- Raw Sockets (direct access to lower layer protocols)
+- To use:
+    - socket setup
+    - socket connect
+    - socket communication
+- Typical TCP client communction requires:
+    - create a TCP socket with socket()
+        - protocol familt is always PF_INET
+        - type determines stream or datagram
+        - TCP/UDP
+    - Connect with connect()
+    - bind() ? 
+    - close with close()

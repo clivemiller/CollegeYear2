@@ -1035,3 +1035,147 @@ while (true) {
   - Process with the smallest resident set
     - This process requires the least future effort
   
+## Scheduling 
+### Aim of Scheduling
+- Assign processes to be executed by
+the processor(s)
+  - Response time
+  - Throughput
+  - Processor utilization
+  - Tardiness etc.
+
+### Scheduling Env
+- single vs. multiple processors
+- static vs. dynamic process arrival
+- Preemptive vs. nonpreemptive
+- Independent vs. dependent tasks
+- etc.
+
+### Long Term Scheduling
+- Determines which programs are admitted
+to the system for processing
+- Controls the degree of multiprogramming
+- More processes, smaller percentage of
+time each process is executed
+
+### Medium term scheduling
+- Part of the swapping function
+- Based on the need to manage the degree of multiprogramming
+
+### Short Term Scheduling
+- Known as the dispatcher
+- executes most frequently 
+- Invoked when an event occurs
+  - Clock interrupts 
+  - I/O interrupts
+  - Operating systems
+  - Operating system calls
+  - signals
+
+### Short Term Scheduling Criteria
+- user-oriented
+  - response time
+    - elapsed time between the submission of a request until there is output
+- System-oriented 
+  - effective and efficient utilization of the processor
+
+![alt text](imgs/scheduling_short.png)
+
+
+## File Management
+
+### File System Properties
+- long-term -existence
+- sharing between processes
+- File Operations
+
+### File Operations
+- Create
+- Delete
+- Open
+- Close
+- etc
+
+### File Terms
+- Field
+  - basic element of data
+  - contains single value
+  - characterized by length and type
+- Record
+  - Collection of related fields
+  - Treated as a unit
+    - example: employee record
+- File
+  - Collection of similar records
+  - Treated as a single entity
+  - have file names
+  - may restrict access
+- Database
+  - collection of related data
+  - relationships exist amongst elements
+
+### File Management systems
+- the way a user or app may access files
+- Programmer does not need to develop file management software
+
+### File systems objectives
+- meet the data management needs and requirements of the user
+- Guarantee that the data in the file are valid 
+- Optimize performance
+- Provide I/O support for a variety of storage device types
+- minimize or elminate the potential for lost of destoryed data
+- PRovide  
+
+### Minimum set of requirements
+- each user needs to be able to create, read, write delete, modify
+- each user needs to be able to have controlled access to others files
+- each user may control the access of their own files
+- each user should be able to move data
+- each user should be able to back up data and recover it
+- each user should be able to access the user's files using symvolic names
+
+### Device Drivers
+- Lowest level
+- Communicates directly with periphal devices
+- responsible for starting I/O operations on a device
+- processes  the completion of an I/O request
+
+### Basic I/O supervisor
+- Responsible for file I/O beginning and end
+- control structure maintaince
+- scheduling
+
+### Logical I/O
+- enables record access
+- maintains basic data
+
+### Access method
+- Reflect different file structures
+- Different ways to access and process data
+
+### File management functions
+- id and locate a selected file
+- use a dir to describe the loc of all files plus their attributes
+- one a shared sys
+- blocking for access to files
+- allocation
+
+### Critea for file org
+- short access time 
+  - needed when accessing a single record 
+  - not needed for batch mode
+- Ease of update
+  - a file on cd-rom will not be updated so this is not a concern
+- Economy of storage
+  - should be minimum redundancy in the data
+  - Redundancy can be used to speed access such as an index
+- Simple maintained
+- Reliability
+
+### File org
+- the pile
+  - data is collected in order of arrival
+  - purpose is to accumulate a mass of data and save it
+  - records may have different fields
+  - no structure 
+  - Records access is by exhaustive search
