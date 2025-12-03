@@ -541,3 +541,26 @@ _start:
     - Connect with connect()
     - bind() ? 
     - close with close()
+- Socket Connetion 
+
+
+## Client/Server
+### Network
+- Client/Server Review:
+    - server is a system that provides a service for the network
+    - client is a system that uses said service
+    - almost all client-server systems are on different computers
+
+- Typical TCP client:
+    - Create a TCP socket using socket()
+    - establish a connection using connect()
+    - communicate using send and receive
+    - close the connection
+
+- special functions
+    - htonl(INADDR_ANY) : converts the unsigned host long int from host byte to network byte
+    - htons((unsigned short)LISTEN_PORT) ; converts the unsigned short int host from host byte to network byte
+    - hton - host to network
+
+- Single Client Single Server
+    - SEE CODE REPO

@@ -1179,3 +1179,63 @@ time each process is executed
   - records may have different fields
   - no structure 
   - Records access is by exhaustive search
+- sequential file
+  - new records are placed in a log file or transaction file
+  - batch update is performed to merge the log file with the master file
+- Problems accessing records
+  - need to scan through file
+  - sequential storage proves limited 
+    - organize sequential files
+- Index
+  - allows to quickly reach the vicinity of the desired record
+    - contains key field and a pointer to the main file
+    - index is searched to find highest key value that is equal to or precedes the desired key value
+
+### File dirs 
+- Contian info about files
+  - attr 
+  - loc
+  - ownership
+- a dir is a file owned by the os
+
+### Simple dir structure
+- a list of entries, one for each file
+- sequential file with the name of the file serving as the key
+- provides no help in organizing the files
+- forces user to be careful not to use the same name
+
+## I/O devices
+- Communication
+  - used to communicate with remote devices 
+  - digital line drivers
+  - modems
+
+### Differences in I/O devices
+- Data rate
+  - may be differences if several order of magnitude between data transfer rates
+- Application
+  - disk used to store files requires file management software
+  - disk used to store virtual memory pages needs special hardware and software to support it
+  - Terminal used by system administrator may have a higher priority
+- Complexity of control
+- Unit of transfer
+  - data may be transferred as a stream of bytes for a terminal or in a larger blocks for a disk
+- data representation
+  - encoding schemes
+- Error conditions
+  - Devices respond to errors differently
+
+### Performing I/O 
+- Programming I/O 
+  - Process is busy-waiting for the operation to complete
+- DMA (direct memory access)
+  - dma module controls exchange of data between main memory and the I/O device 
+  - Processor interrupted only after the entire block has been transferred
+
+## Disk Performance Parameters
+- To read or write, the disk head must be positioned at he desired track and at the beginning of the desired sector
+- Seek time
+  - time it takes to position the head at the desired track
+- Rotational delay or rotational latency
+  - Time it takes for the beginning of the 
+- wait for device, wait for channel, seek, rotational delay, data transfer
