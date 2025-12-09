@@ -859,9 +859,383 @@ while (true) {
 - partitions are small
 - program can occupy more than one page 
 
-## Segmentation 
+### Segmentation 
 - all segments of all programs do not have to be of the same length
 - There is a maximum segment length
 - addressing consist of two parts
   - a segment number and an offset
 - Since segments are not equal, segmentation is similar to dynamic partitioning 
+
+### Dynamic partitioning 
+  - Program may occupy more than one partition 
+  - partitions need not be contiguous 
+
+## Virtual Memory
+
+### Hardware and Control Structures
+- Memory refs are dynamically translated into physical addresses at run time
+  - A process may be swapped in and out of main memory such that it occupies different regions
+- Process may be brocken up into pieces that do not need to be located contiguously in main memory
+- All pieces of a process do not need to be loaded in main memory during execution
+
+### Program execution 
+- The OS brings a few pieces of the program into main memory 
+- Resident set - the portion of a process that is in main memory 
+- An interrupt is generated when an address is needed that is not in main memory 
+- The OS places the process is a blocking state
+- Piece of process that contains the logical address is brought into main memory 
+  - OS issues a disk read request
+  - another process dispatched to run while the disk I/O takes place
+  - An interrupt is issued when disk I/O completes which causes the OS to place the affected process in the ready state
+
+### Advantages of breaking up an process
+- More processes may be maintained in main memory
+  - only load in some of the pieces of each process
+- A process may be larger than all of main memory
+
+### Types of Memory
+- Real Memory 
+  - Main memory
+- Virtual Memory
+  - memory on disk 
+  - allows for effective multiprogramming and relieves the user of tight constraints of main memory 
+  - Programming convenience
+
+### Thrashing 
+- Swapping out a piece of a process just before that piece is needed
+- The processor spends most of its time swapping pieces rather than executing user instructions
+
+### Principle of Locality 
+- Program and data references with a process tend to cluster
+- Only a few pieces of a process will be needed over a short period of time
+- Possible to make intelligent guesses 
+- This suggests VM may work efficiently 
+
+### Virtual Memory Support
+- Hardware must support paging and segmentation
+- The OS must be able to manage the movement of pages and/or segments between secondary and main memory
+
+### Paging 
+- Each process has its own page table 
+- Each page table entry contains the frame number of the corresponding page in main memory 
+
+## Segmentation
+- May be unequal, dynamic size
+- Simplifies handling of growing data structures
+- Allows programs to be altered and recompiled independently
+- Lends itself to sharing data among processes
+- Lends itself to protection
+
+### Segment Tables
+- Each entry contains:
+  - Corresponding segment in main memory
+  - Length of the segment
+  - Bit to determine if segment is already in main memory
+  - Bit to determine if segment has been modified since loaded
+
+### Combined Paging and Segmentation
+- Paging is transparent to the programmer
+- Segmentation is visible to the programmer
+- Each segment is broken into fixed-size pages
+
+### Fetch Policy
+- Determines when a page should be brought into memory
+- **Demand paging**
+  - Only brings pages into main memory when a reference is made to a location on the page
+  - Many page faults when process first started
+- **Prepaging**
+  - Brings in more pages than needed
+  - More efficient to bring in pages that reside contiguously on disk
+
+### Placement Policy
+- Determines where in real memory a process piece is to reside
+- Important in a segmentation system
+- Paging or combined paging with segmentation hardware performs address translation
+
+### Replacement Policy
+- Which page is replaced?
+- Page removed should be the page least likely to be referenced in the near future
+- Most policies predict future behavior on the basis of past behavior
+
+### Frame Locking
+- If frame is locked, it may not be replaced
+- Used for:
+  - Kernel of the operating system
+  - Control structures
+  - I/O buffers
+- Associate a lock bit with each frame
+
+### Basic Replacement Algorithms
+- Optimal policy 
+  - Selects for replacement that page for which the time to the next reference is the longest 
+  - Impossible to have perfect knowledge of future events
+  - This policy is wishful thinking, but can serve as a base-line when post evaluating different policies
+- Least Recently Used
+  - replaces the page that has not been used in the longest time
+  - By the principle of locality, this should be the page least likely to be referenced in the future
+  - Each page could be tagged with the time of last reference. this would require a lot of overhead
+- First-in, First-out 
+  - Treats page frames allocated to a process as a circular buffer
+  - Pages are removed in a round robin style 
+  - simplest replacement policy to implement 
+  - Page that has been in memory the longest is removed
+- Clock policy 
+  - additional bit called use bit
+  - when page is first loaded, use bit is set to 1
+  - When a page is referenced, set it to 1
+  - when it is time to replace a page, first frame that is 0 is replaced
+  - when looking for a replacement, all 1s are set to 0s
+
+### Resident Set size
+- Fixed-allocation
+  - gives a process a fixed number of pages within which to execute
+  - When a page fault occurs one of the pages of that process must be replaced
+- Variable-allocation
+  - Number of pages allocated to a process varies over the lifetime of the process
+
+### Fixed Allocation, Local Scope 
+- Decide ahead of time the amount of allocation to give a process 
+  - if allocation is too small, there will be a high page fault rate
+  - if allocation is too large, there will be too few programs in main memory
+
+### Variable allocation, global scope
+- Easiest to implement
+- Adopted by many operating systems 
+- operating system keeps list of free frames
+- free frame is added to resident set of te process when a page fault occurs
+- if no free frame, replaces one from another process
+
+### Variable allocation, local scope
+- when new process added, allocate number of page frames based on application type, program request or other criteria
+- WHen a page fault occurs, select page from among the resident set of the of process that suffers the fault
+- reevaluate allocation from time to time
+
+### Cleaning Policy
+- Demand cleaning 
+  - a page is written out only when it has been selected for replacement 
+- precleaning 
+  - pages are written out in batches
+- Best approach uses page buffering
+  - Replaced pages are placed in a pool of free frames
+  - Pages can be written out in batches to disk
+  - If a page is referenced again before being written, it can be restored without disk I/O
+  - Balances efficiency of precleaning with flexibility of demand cleaning
+- Load control 
+  - determines the number of processes that will be resident in main memory 
+    - too few processes, many occasions when all processes will be blocked and much time will be spent in swapping
+    - too many, and thrashing occurs
+  
+  ### Process suspension
+  - if the degree of multiprogramming is to be reduced, suspend
+    - lowest priority process
+    - faulting process
+      - this process does not have its working set in main memory so it will be blocked anyway
+    - Last process activated 
+      - This process is least likely to have its working set resident 
+  - Process with the smallest resident set
+    - This process requires the least future effort
+  
+## Scheduling 
+### Aim of Scheduling
+- Assign processes to be executed by
+the processor(s)
+  - Response time
+  - Throughput
+  - Processor utilization
+  - Tardiness etc.
+
+### Scheduling Env
+- single vs. multiple processors
+- static vs. dynamic process arrival
+- Preemptive vs. nonpreemptive
+- Independent vs. dependent tasks
+- etc.
+
+### Long Term Scheduling
+- Determines which programs are admitted
+to the system for processing
+- Controls the degree of multiprogramming
+- More processes, smaller percentage of
+time each process is executed
+
+### Medium term scheduling
+- Part of the swapping function
+- Based on the need to manage the degree of multiprogramming
+
+### Short Term Scheduling
+- Known as the dispatcher
+- executes most frequently 
+- Invoked when an event occurs
+  - Clock interrupts 
+  - I/O interrupts
+  - Operating systems
+  - Operating system calls
+  - signals
+
+### Short Term Scheduling Criteria
+- user-oriented
+  - response time
+    - elapsed time between the submission of a request until there is output
+- System-oriented 
+  - effective and efficient utilization of the processor
+
+![alt text](imgs/scheduling_short.png)
+
+
+## File Management
+
+### File System Properties
+- long-term -existence
+- sharing between processes
+- File Operations
+
+### File Operations
+- Create
+- Delete
+- Open
+- Close
+- etc
+
+### File Terms
+- Field
+  - basic element of data
+  - contains single value
+  - characterized by length and type
+- Record
+  - Collection of related fields
+  - Treated as a unit
+    - example: employee record
+- File
+  - Collection of similar records
+  - Treated as a single entity
+  - have file names
+  - may restrict access
+- Database
+  - collection of related data
+  - relationships exist amongst elements
+
+### File Management systems
+- the way a user or app may access files
+- Programmer does not need to develop file management software
+
+### File systems objectives
+- meet the data management needs and requirements of the user
+- Guarantee that the data in the file are valid 
+- Optimize performance
+- Provide I/O support for a variety of storage device types
+- minimize or elminate the potential for lost of destoryed data
+- PRovide  
+
+### Minimum set of requirements
+- each user needs to be able to create, read, write delete, modify
+- each user needs to be able to have controlled access to others files
+- each user may control the access of their own files
+- each user should be able to move data
+- each user should be able to back up data and recover it
+- each user should be able to access the user's files using symvolic names
+
+### Device Drivers
+- Lowest level
+- Communicates directly with periphal devices
+- responsible for starting I/O operations on a device
+- processes  the completion of an I/O request
+
+### Basic I/O supervisor
+- Responsible for file I/O beginning and end
+- control structure maintaince
+- scheduling
+
+### Logical I/O
+- enables record access
+- maintains basic data
+
+### Access method
+- Reflect different file structures
+- Different ways to access and process data
+
+### File management functions
+- id and locate a selected file
+- use a dir to describe the loc of all files plus their attributes
+- one a shared sys
+- blocking for access to files
+- allocation
+
+### Critea for file org
+- short access time 
+  - needed when accessing a single record 
+  - not needed for batch mode
+- Ease of update
+  - a file on cd-rom will not be updated so this is not a concern
+- Economy of storage
+  - should be minimum redundancy in the data
+  - Redundancy can be used to speed access such as an index
+- Simple maintained
+- Reliability
+
+### File org
+- the pile
+  - data is collected in order of arrival
+  - purpose is to accumulate a mass of data and save it
+  - records may have different fields
+  - no structure 
+  - Records access is by exhaustive search
+- sequential file
+  - new records are placed in a log file or transaction file
+  - batch update is performed to merge the log file with the master file
+- Problems accessing records
+  - need to scan through file
+  - sequential storage proves limited 
+    - organize sequential files
+- Index
+  - allows to quickly reach the vicinity of the desired record
+    - contains key field and a pointer to the main file
+    - index is searched to find highest key value that is equal to or precedes the desired key value
+
+### File dirs 
+- Contian info about files
+  - attr 
+  - loc
+  - ownership
+- a dir is a file owned by the os
+
+### Simple dir structure
+- a list of entries, one for each file
+- sequential file with the name of the file serving as the key
+- provides no help in organizing the files
+- forces user to be careful not to use the same name
+
+## I/O devices
+- Communication
+  - used to communicate with remote devices 
+  - digital line drivers
+  - modems
+
+### Differences in I/O devices
+- Data rate
+  - may be differences if several order of magnitude between data transfer rates
+- Application
+  - disk used to store files requires file management software
+  - disk used to store virtual memory pages needs special hardware and software to support it
+  - Terminal used by system administrator may have a higher priority
+- Complexity of control
+- Unit of transfer
+  - data may be transferred as a stream of bytes for a terminal or in a larger blocks for a disk
+- data representation
+  - encoding schemes
+- Error conditions
+  - Devices respond to errors differently
+
+### Performing I/O 
+- Programming I/O 
+  - Process is busy-waiting for the operation to complete
+- DMA (direct memory access)
+  - dma module controls exchange of data between main memory and the I/O device 
+  - Processor interrupted only after the entire block has been transferred
+
+## Disk Performance Parameters
+- To read or write, the disk head must be positioned at he desired track and at the beginning of the desired sector
+- Seek time
+  - time it takes to position the head at the desired track
+- Rotational delay or rotational latency
+  - Time it takes for the beginning of the 
+- wait for device, wait for channel, seek, rotational delay, data transfer

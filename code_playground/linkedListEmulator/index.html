@@ -1,13 +1,829 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Linked List Emulator</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS 120 Linked List Visualizer</title>
+    <style>
+        :root {
+            --bg-color: #1e1e2e;
+            --text-color: #cdd6f4;
+            --primary-color: #89b4fa;
+            --secondary-color: #a6e3a1;
+            --accent-color: #f38ba8;
+            --node-bg: #313244;
+            --node-border: #45475a;
+            --pointer-color: #fab387;
+            --highlight-color: #f9e2af;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        header {
+            background-color: #11111b;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--node-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 { margin: 0; font-size: 1.5rem; color: var(--primary-color); }
+        .subtitle { font-size: 0.9rem; opacity: 0.7; }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Controls Area */
+        #controls {
+            padding: 1rem 2rem;
+            background-color: #181825;
+            border-bottom: 1px solid var(--node-border);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            background: #313244;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        input {
+            background: #1e1e2e;
+            border: 1px solid #45475a;
+            color: white;
+            padding: 0.4rem;
+            border-radius: 4px;
+            width: 60px;
+        }
+
+        button {
+            background: var(--primary-color);
+            color: #1e1e2e;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: filter 0.2s;
+        }
+
+        button:hover { filter: brightness(1.1); }
+        button:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(1); }
+        
+        button.danger { background: var(--accent-color); }
+        button.success { background: var(--secondary-color); }
+
+        /* Visualization Area */
+        #visualizer {
+            flex: 1;
+            padding: 2rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            display: flex;
+            align-items: center;
+            /* Custom scrollbar */
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--bg-color);
+        }
+
+        .list-container {
+            display: flex;
+            align-items: center;
+            padding-left: 2rem;
+            min-width: min-content;
+        }
+
+        /* Node Styles */
+        .node-wrapper {
+            display: flex;
+            align-items: center;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .node-wrapper.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .node {
+            width: 120px;
+            height: 80px;
+            background: var(--node-bg);
+            border: 2px solid var(--node-border);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+        }
+
+        .node.highlight {
+            border-color: var(--highlight-color);
+            box-shadow: 0 0 15px var(--highlight-color);
+        }
+
+        .node.target {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 15px var(--secondary-color);
+        }
+
+        .node-data {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--node-border);
+        }
+
+        .node-next {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--pointer-color);
+            background: rgba(0,0,0,0.2);
+        }
+
+        .node-address {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-family: monospace;
+            font-size: 0.7rem;
+            color: #6c7086;
+        }
+
+        .arrow {
+            width: 60px;
+            height: 2px;
+            background: var(--text-color);
+            position: relative;
+            margin: 0 5px;
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            right: -2px;
+            top: -4px;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 10px solid var(--text-color);
+        }
+
+        .null-ptr {
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Code/Log Panel */
+        #info-panel {
+            height: 200px;
+            background: #11111b;
+            border-top: 1px solid var(--node-border);
+            display: flex;
+        }
+
+        #code-display {
+            flex: 1;
+            padding: 1rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            border-right: 1px solid var(--node-border);
+            overflow-y: auto;
+            color: #a6adc8;
+        }
+
+        .code-line { padding: 2px 0; }
+        .code-line.active { background: rgba(137, 180, 250, 0.2); color: white; }
+
+        #log-display {
+            flex: 1;
+            padding: 1rem;
+            font-family: monospace;
+            overflow-y: auto;
+        }
+
+        .log-entry { margin-bottom: 0.5rem; border-left: 3px solid; padding-left: 0.5rem; }
+        .log-info { border-color: var(--primary-color); }
+        .log-success { border-color: var(--secondary-color); }
+        .log-error { border-color: var(--accent-color); }
+
+        /* Animations */
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Linked List Emulator</h1>
+            <span class="subtitle">CS 120 Interactive Learning Tool</span>
+        </div>
+        <div style="font-size: 0.8rem; color: #6c7086;">
+            Head: <span id="head-addr">NULL</span>
+        </div>
+    </header>
+
+    <div id="controls">
+        <div class="control-group">
+            <input type="number" id="data-input" placeholder="Data" value="10">
+            <button onclick="list.prepend()" class="success">Prepend (Head)</button>
+            <button onclick="list.append()" class="success">Append (Tail)</button>
+        </div>
+
+        <div class="control-group">
+            <input type="number" id="index-input" placeholder="Idx" min="0" style="width: 40px;">
+            <button onclick="list.insertAt()">Insert at Index</button>
+            <button onclick="list.removeAt()" class="danger">Remove at Index</button>
+        </div>
+
+        <div class="control-group">
+            <button onclick="list.removeHead()" class="danger">Remove Head</button>
+            <button onclick="list.removeTail()" class="danger">Remove Tail</button>
+        </div>
+
+        <div class="control-group">
+            <input type="number" id="search-input" placeholder="Val" style="width: 40px;">
+            <button onclick="list.search()">Search</button>
+        </div>
+        
+        <div class="control-group" style="margin-left: auto;">
+            <button onclick="list.clear()" class="danger">Clear List</button>
+            <button onclick="list.generateRandom()">Randomize</button>
+        </div>
+    </div>
+
+    <main>
+        <div id="visualizer">
+            <div class="list-container" id="list-container">
+                <!-- Nodes will be injected here -->
+                <div class="null-ptr">NULL</div>
+            </div>
+        </div>
+    </main>
+
+    <div id="info-panel">
+        <div id="code-display">
+            <div style="color: #6c7086;">// Operation Code Trace</div>
+            <div id="code-content">Waiting for operation...</div>
+        </div>
+        <div id="log-display">
+            <div class="log-entry log-info">System ready. Create a node to begin.</div>
+        </div>
+    </div>
+
+    <script>
+        // Utility to generate fake memory addresses
+        const getAddress = () => '0x' + Math.floor(Math.random() * 16777215).toString(16).toUpperCase().padStart(6, '0');
+
+        // Delay helper for animations
+        const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+        class Node {
+            constructor(data) {
+                this.data = data;
+                this.next = null;
+                this.address = getAddress();
+                this.id = Math.random().toString(36).substr(2, 9); // Unique ID for DOM mapping
+            }
+        }
+
+        class VisualLinkedList {
+            constructor() {
+                this.head = null;
+                this.size = 0;
+                this.container = document.getElementById('list-container');
+                this.isAnimating = false;
+                this.animationSpeed = 600;
+            }
+
+            // --- UI Helpers ---
+
+            log(message, type = 'info') {
+                const logPanel = document.getElementById('log-display');
+                const entry = document.createElement('div');
+                entry.className = `log-entry log-${type}`;
+                entry.textContent = `> ${message}`;
+                logPanel.prepend(entry);
+            }
+
+            setCode(lines) {
+                const display = document.getElementById('code-content');
+                display.innerHTML = lines.map((line, i) => 
+                    `<div class="code-line" id="code-${i}">${line}</div>`
+                ).join('');
+            }
+
+            highlightCode(lineIndex) {
+                document.querySelectorAll('.code-line').forEach(el => el.classList.remove('active'));
+                const line = document.getElementById(`code-${lineIndex}`);
+                if (line) line.classList.add('active');
+            }
+
+            updateHeadDisplay() {
+                document.getElementById('head-addr').textContent = this.head ? this.head.address : 'NULL';
+            }
+
+            // --- Core Logic & Visualization ---
+
+            async render() {
+                this.container.innerHTML = '';
+                let current = this.head;
+                
+                while (current) {
+                    await this.createNodeDOM(current, false); // false = no animation for full re-render
+                    current = current.next;
+                }
+                
+                // Append NULL
+                const nullPtr = document.createElement('div');
+                nullPtr.className = 'null-ptr';
+                nullPtr.textContent = 'NULL';
+                this.container.appendChild(nullPtr);
+                
+                this.updateHeadDisplay();
+            }
+
+            createNodeDOM(node, animate = true) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'node-wrapper';
+                wrapper.id = `node-${node.id}`;
+                
+                const nodeEl = document.createElement('div');
+                nodeEl.className = 'node';
+                
+                const addrEl = document.createElement('div');
+                addrEl.className = 'node-address';
+                addrEl.textContent = node.address;
+                
+                const dataEl = document.createElement('div');
+                dataEl.className = 'node-data';
+                dataEl.textContent = node.data;
+                
+                const nextEl = document.createElement('div');
+                nextEl.className = 'node-next';
+                nextEl.textContent = 'next'; // Simplified, could show next addr
+
+                nodeEl.appendChild(addrEl);
+                nodeEl.appendChild(dataEl);
+                nodeEl.appendChild(nextEl);
+                
+                wrapper.appendChild(nodeEl);
+
+                // Arrow
+                const arrow = document.createElement('div');
+                arrow.className = 'arrow';
+                wrapper.appendChild(arrow);
+
+                // Insert before the NULL pointer (last child)
+                const nullPtr = this.container.lastElementChild;
+                this.container.insertBefore(wrapper, nullPtr);
+
+                if (animate) {
+                    // Trigger reflow
+                    wrapper.offsetHeight; 
+                    wrapper.classList.add('visible');
+                    return sleep(this.animationSpeed);
+                } else {
+                    wrapper.classList.add('visible');
+                    return Promise.resolve();
+                }
+            }
+
+            async highlightNode(node, type = 'highlight') {
+                if (!node) return;
+                const el = document.getElementById(`node-${node.id}`).querySelector('.node');
+                el.classList.add(type);
+                await sleep(this.animationSpeed);
+                el.classList.remove(type);
+            }
+
+            // --- Operations ---
+
+            async prepend() {
+                if (this.isAnimating) return;
+                this.isAnimating = true;
+                
+                const val = document.getElementById('data-input').value;
+                const newNode = new Node(val);
+
+                this.setCode([
+                    `Node newNode = new Node(${val});`,
+                    `newNode.next = head;`,
+                    `head = newNode;`
+                ]);
+
+                this.highlightCode(0);
+                this.log(`Creating new node with data ${val}`);
+                
+                // Visual: Create node but don't link yet
+                // For prepend, we need to insert it at the very beginning of DOM
+                const wrapper = document.createElement('div');
+                wrapper.className = 'node-wrapper';
+                wrapper.id = `node-${newNode.id}`;
+                wrapper.innerHTML = `
+                    <div class="node">
+                        <div class="node-address">${newNode.address}</div>
+                        <div class="node-data">${newNode.data}</div>
+                        <div class="node-next">next</div>
+                    </div>
+                    <div class="arrow"></div>
+                `;
+                
+                this.container.insertBefore(wrapper, this.container.firstElementChild);
+                
+                // Animate entry
+                wrapper.offsetHeight; 
+                wrapper.classList.add('visible');
+                await sleep(this.animationSpeed);
+
+                this.highlightCode(1);
+                newNode.next = this.head;
+                
+                this.highlightCode(2);
+                this.head = newNode;
+                this.size++;
+                
+                this.updateHeadDisplay();
+                this.log('Node prepended successfully', 'success');
+                this.isAnimating = false;
+            }
+
+            async append() {
+                if (this.isAnimating) return;
+                this.isAnimating = true;
+
+                const val = document.getElementById('data-input').value;
+                const newNode = new Node(val);
+
+                this.setCode([
+                    `Node newNode = new Node(${val});`,
+                    `if (head == null) head = newNode;`,
+                    `else {`,
+                    `  Node current = head;`,
+                    `  while (current.next != null) current = current.next;`,
+                    `  current.next = newNode;`,
+                    `}`
+                ]);
+
+                this.highlightCode(0);
+                this.log(`Creating new node with data ${val}`);
+
+                if (!this.head) {
+                    this.highlightCode(1);
+                    this.head = newNode;
+                    this.size++;
+                    // Visual insert
+                    const nullPtr = this.container.lastElementChild;
+                    const wrapper = this.createNodeHTML(newNode);
+                    this.container.insertBefore(wrapper, nullPtr);
+                    wrapper.offsetHeight; wrapper.classList.add('visible');
+                } else {
+                    this.highlightCode(3);
+                    let current = this.head;
+                    await this.highlightNode(current);
+
+                    while (current.next) {
+                        this.highlightCode(4);
+                        current = current.next;
+                        await this.highlightNode(current);
+                    }
+
+                    this.highlightCode(5);
+                    current.next = newNode;
+                    this.size++;
+
+                    // Visual insert
+                    const nullPtr = this.container.lastElementChild;
+                    const wrapper = this.createNodeHTML(newNode);
+                    this.container.insertBefore(wrapper, nullPtr);
+                    wrapper.offsetHeight; wrapper.classList.add('visible');
+                }
+
+                this.updateHeadDisplay();
+                this.log('Node appended successfully', 'success');
+                this.isAnimating = false;
+            }
+
+            createNodeHTML(node) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'node-wrapper';
+                wrapper.id = `node-${node.id}`;
+                wrapper.innerHTML = `
+                    <div class="node">
+                        <div class="node-address">${node.address}</div>
+                        <div class="node-data">${node.data}</div>
+                        <div class="node-next">next</div>
+                    </div>
+                    <div class="arrow"></div>
+                `;
+                return wrapper;
+            }
+
+            async removeHead() {
+                if (this.isAnimating) return;
+                if (!this.head) { this.log("List is empty", "error"); return; }
+                this.isAnimating = true;
+
+                this.setCode([
+                    `if (head != null) {`,
+                    `  Node temp = head;`,
+                    `  head = head.next;`,
+                    `  free(temp);`,
+                    `}`
+                ]);
+
+                this.highlightCode(1);
+                const target = this.head;
+                await this.highlightNode(target, 'target');
+
+                this.highlightCode(2);
+                this.head = this.head.next;
+                this.size--;
+
+                this.highlightCode(3);
+                // Visual removal
+                const el = document.getElementById(`node-${target.id}`);
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                await sleep(500);
+                el.remove();
+
+                this.updateHeadDisplay();
+                this.log('Head removed', 'success');
+                this.isAnimating = false;
+            }
+
+            async removeTail() {
+                if (this.isAnimating) return;
+                if (!this.head) { this.log("List is empty", "error"); return; }
+                this.isAnimating = true;
+
+                this.setCode([
+                    `if (head.next == null) head = null;`,
+                    `else {`,
+                    `  Node current = head;`,
+                    `  while (current.next.next != null)`,
+                    `    current = current.next;`,
+                    `  current.next = null;`,
+                    `}`
+                ]);
+
+                if (!this.head.next) {
+                    this.highlightCode(0);
+                    await this.highlightNode(this.head, 'target');
+                    const el = document.getElementById(`node-${this.head.id}`);
+                    el.style.opacity = '0';
+                    await sleep(500);
+                    el.remove();
+                    this.head = null;
+                } else {
+                    this.highlightCode(2);
+                    let current = this.head;
+                    await this.highlightNode(current);
+
+                    while (current.next.next) {
+                        this.highlightCode(3);
+                        current = current.next;
+                        await this.highlightNode(current);
+                    }
+
+                    this.highlightCode(5);
+                    const target = current.next;
+                    await this.highlightNode(target, 'target');
+                    
+                    const el = document.getElementById(`node-${target.id}`);
+                    el.style.opacity = '0';
+                    await sleep(500);
+                    el.remove();
+                    
+                    current.next = null;
+                }
+                
+                this.size--;
+                this.updateHeadDisplay();
+                this.log('Tail removed', 'success');
+                this.isAnimating = false;
+            }
+
+            async insertAt() {
+                if (this.isAnimating) return;
+                const index = parseInt(document.getElementById('index-input').value);
+                const val = document.getElementById('data-input').value;
+
+                if (isNaN(index) || index < 0 || index > this.size) {
+                    this.log(`Invalid index: ${index}. Size is ${this.size}`, 'error');
+                    return;
+                }
+
+                if (index === 0) return this.prepend();
+                if (index === this.size) return this.append();
+
+                this.isAnimating = true;
+                const newNode = new Node(val);
+
+                this.setCode([
+                    `Node newNode = new Node(${val});`,
+                    `Node current = head;`,
+                    `for (int i=0; i < index-1; i++)`,
+                    `  current = current.next;`,
+                    `newNode.next = current.next;`,
+                    `current.next = newNode;`
+                ]);
+
+                this.highlightCode(1);
+                let current = this.head;
+                await this.highlightNode(current);
+
+                for (let i = 0; i < index - 1; i++) {
+                    this.highlightCode(3);
+                    current = current.next;
+                    await this.highlightNode(current);
+                }
+
+                this.highlightCode(4);
+                newNode.next = current.next;
+
+                // Visual Insert
+                const currentEl = document.getElementById(`node-${current.id}`);
+                const wrapper = this.createNodeHTML(newNode);
+                // Insert after currentEl
+                currentEl.after(wrapper);
+                wrapper.offsetHeight; wrapper.classList.add('visible');
+                await sleep(this.animationSpeed);
+
+                this.highlightCode(5);
+                current.next = newNode;
+                this.size++;
+
+                this.log(`Inserted at index ${index}`, 'success');
+                this.isAnimating = false;
+            }
+
+            async removeAt() {
+                if (this.isAnimating) return;
+                const index = parseInt(document.getElementById('index-input').value);
+
+                if (isNaN(index) || index < 0 || index >= this.size) {
+                    this.log(`Invalid index: ${index}. Size is ${this.size}`, 'error');
+                    return;
+                }
+
+                if (index === 0) return this.removeHead();
+
+                this.isAnimating = true;
+
+                this.setCode([
+                    `Node current = head;`,
+                    `for (int i=0; i < index-1; i++)`,
+                    `  current = current.next;`,
+                    `Node toDelete = current.next;`,
+                    `current.next = toDelete.next;`,
+                    `free(toDelete);`
+                ]);
+
+                this.highlightCode(0);
+                let current = this.head;
+                await this.highlightNode(current);
+
+                for (let i = 0; i < index - 1; i++) {
+                    this.highlightCode(2);
+                    current = current.next;
+                    await this.highlightNode(current);
+                }
+
+                const toDelete = current.next;
+                this.highlightCode(3);
+                await this.highlightNode(toDelete, 'target');
+
+                this.highlightCode(4);
+                current.next = toDelete.next;
+
+                // Visual Remove
+                const el = document.getElementById(`node-${toDelete.id}`);
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                await sleep(500);
+                el.remove();
+
+                this.size--;
+                this.log(`Removed at index ${index}`, 'success');
+                this.isAnimating = false;
+            }
+
+            async search() {
+                if (this.isAnimating) return;
+                const val = document.getElementById('search-input').value;
+                if (!val) return;
+                
+                this.isAnimating = true;
+                this.setCode([
+                    `Node current = head;`,
+                    `int index = 0;`,
+                    `while (current != null) {`,
+                    `  if (current.data == ${val}) return index;`,
+                    `  current = current.next;`,
+                    `  index++;`,
+                    `}`,
+                    `return -1;`
+                ]);
+
+                let current = this.head;
+                let index = 0;
+                let found = false;
+
+                while (current) {
+                    this.highlightCode(2);
+                    await this.highlightNode(current);
+                    
+                    this.highlightCode(3);
+                    if (current.data == val) {
+                        await this.highlightNode(current, 'target');
+                        this.log(`Found value ${val} at index ${index}`, 'success');
+                        found = true;
+                        break;
+                    }
+                    
+                    this.highlightCode(4);
+                    current = current.next;
+                    index++;
+                }
+
+                if (!found) {
+                    this.highlightCode(7);
+                    this.log(`Value ${val} not found`, 'error');
+                }
+
+                this.isAnimating = false;
+            }
+
+            clear() {
+                this.head = null;
+                this.size = 0;
+                this.container.innerHTML = '<div class="null-ptr">NULL</div>';
+                this.updateHeadDisplay();
+                this.log('List cleared');
+            }
+
+            generateRandom() {
+                this.clear();
+                const count = Math.floor(Math.random() * 5) + 3;
+                for(let i=0; i<count; i++) {
+                    const val = Math.floor(Math.random() * 100);
+                    const node = new Node(val);
+                    if(!this.head) {
+                        this.head = node;
+                    } else {
+                        let current = this.head;
+                        while(current.next) current = current.next;
+                        current.next = node;
+                    }
+                    this.size++;
+                }
+                this.render(); // Full re-render
+                this.log(`Generated ${count} random nodes`);
+            }
+        }
+
+        const list = new VisualLinkedList();
+        
+        // Initialize with some data
+        list.generateRandom();
+
+    </script>
+</body>
 </html>

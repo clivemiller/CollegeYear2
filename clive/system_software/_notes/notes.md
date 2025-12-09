@@ -412,3 +412,155 @@ _start:
 - units of I/O
 ### Variable Blocking: Unspanned
 ### Variable Blocking: Spanning
+
+## Networking
+- very important
+- lots of terms
+- many standards and protocols
+
+### Vocab
+- LAN - Local Area Network
+- VLAN - Virtual LAN
+- WAN - Wide Area Network
+- bridge
+- router
+- repeater
+- gateway
+- OSI Model (Open Systems Interconnection) framework that divides computer network functions into seven distinct layers
+- IP - Internet Provider
+- TCP - Transmission Control Protocol
+- UDP - User Datagram Protocol
+- TCP/IP - Protocols used in the internet and other computer networks
+- IP address (v4, v6) 32 bit vs 128 bits
+- "dotted quad format" represents IPv4, e.g. 000.000.000.000
+- URL
+- subnet
+- netmask
+- datagram
+- packet
+- header
+- MAC addresses - Media Access Control Address
+- checksum
+- DNS - Domain Name System
+- NFS - Network File System
+- FTP - File transfer Protocol
+- telnet
+- SSH - Secure Shell 
+- SNMP - Simple Network Management Protocol
+- SMTP - SImple Mail Transfer Protocol
+- ICMP - Internet Control Message Protocol
+- DHCP - Dynamic Host Configuration Protocol
+- HTTP(s) - Hypertext Transfer Protocol (secure)
+- port
+- reliable communication
+- unreliable communication
+- token ring
+
+### basic
+- Local area networks (LANs) are defined in terms of the protocol and the topology used for accessing the networking
+- The networking protocol is the set of rules established for users to exchange information
+- The topology is the network architecture used the interconnect network 
+- A token-ring topology is shown in the following figure. In this topology, a "token" (T) is placed in in the data channel
+- OSI - open systems interconnect
+
+### TCP/IP
+- IEEE/ISO Standards
+- High level interface
+    - LAN Management 
+    - Local bridging 
+    - system load protocol
+
+### Client Server
+- a server is a system that provides a specific service for the rest of the network
+- a client is another system that uses the service
+- (DONT HAVE TO BE SEPARATE)
+
+## Servers
+- Network file systems
+- Remote Printing
+- Remote execution
+- Name servers
+- Terminal servers
+- Network-oriented window system
+
+### Layers
+- Application layer
+- Transport layer
+- Internet layer
+- Network interface layer
+
+## Interprocess Communication
+### Pipes
+- An interprocess communication mechanism allowing two or more processes to send information to each other
+- Consider: who | wc -l
+    - bytes form "who" flow through the pipe into wc -l
+    - the -l options on outputs total number of lines in the input
+    - both processes run concurrently; pipe buffers and protects against overflow; suspends reader until more data becomes available
+
+- Unnamed Pipes
+    - sys call: int pipe( int fd[2])
+        - pipe() creates an unnamed pipe and returns two file descriptors
+        - the descriptor associated with the "read" end of the pipe is stored in fd[0]
+        - the descriptor associated with the "write" end of the pipe is stored in fd[1]
+        - For example:
+        ```C
+        int fd[2];
+        pipe(fd);
+        ```
+    - Rules  apply for read processes
+        - if it reads from pipe where write rnd has been closed, read() returns 0
+        - ...
+    - Rules from writing
+        - if it writes from pipe where read end has been closed, write fails and writer is sent SIGPIPE signal. (termination)
+- Named Pipes
+    - Named Pipes (FIFOs) are less restricted and have a name in the file system. 
+    - can be used easier and exist until deleted
+    - use mkfifo() or mkfifo linux util
+        - mkfifo fileName
+        - mkfifo("myPipe", 0660)
+- Named pipe operation
+    - a special file is added into the file system
+    - Once opened by open()
+        - write() puts data at the end
+        - read() takes data off the end
+    - close()
+
+### Sockets
+- Stream Sockets (connection based TCP) in order 
+- Datagram sockets (UDP), delivery or order not guaranteed
+- Raw Sockets (direct access to lower layer protocols)
+- To use:
+    - socket setup
+    - socket connect
+    - socket communication
+- Typical TCP client communction requires:
+    - create a TCP socket with socket()
+        - protocol familt is always PF_INET
+        - type determines stream or datagram
+        - TCP/UDP
+    - Connect with connect()
+    - bind() ? 
+    - close with close()
+- Socket Connetion 
+
+
+## Client/Server
+### Network
+- Client/Server Review:
+    - server is a system that provides a service for the network
+    - client is a system that uses said service
+    - almost all client-server systems are on different computers
+
+- Typical TCP client:
+    - Create a TCP socket using socket()
+    - establish a connection using connect()
+    - communicate using send and receive
+    - close the connection
+
+- special functions
+    - htonl(INADDR_ANY) : converts the unsigned host long int from host byte to network byte
+    - htons((unsigned short)LISTEN_PORT) ; converts the unsigned short int host from host byte to network byte
+    - hton - host to network
+
+- Single Client Single Server
+    - SEE CODE REPO

@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "cout",
+        "DONT",
         "endl",
         "Interproccess",
         "Interprocess",
@@ -9,6 +10,8 @@
         "livelock",
         "metacharacter",
         "metacharacters",
+        "mkfifo",
+        "SNMP",
         "XCOFF",
         "XTSTEP"
     ],
